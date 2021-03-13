@@ -1,0 +1,94 @@
+Gra w życie
+Opis
+Gra w życie jest przykładem aparatu komórkowego. Została ona wymyślona przez Johna Hortona Conwaya, brytyjskiego matematyka, w 1970 roku. Odbywa się ona na kwadratowej siatce komórek, gdzie każda komórka może być albo żywa, albo martwa. Ich zachowaniem kierują następujące reguły:
+
+Komórka ożywa, gdy ma dokładnie trzech sąsiadów żywych.
+Komórka przeżywa, gdy ma dwóch lub trzech sąsiadów żywych
+umiera, gdy ma ich mniej niż dwoje — z samotności, lub gdy ma ich więcej niż czworo — z przeludnienia
+Przykład 1
+W przykładzie reguły zostały zdefiniowane w częsci ustalanie reguł gry - plansza gry umieszczona w liście
+
+In [0]:
+# losowanie listy
+from random import random
+
+n = 78
+p = 0.9
+a = ["*" if random() > p else "." for _ in range(n)]
+
+# ustalanie reguł gry
+r = {"***": ".",
+     "**.": ".",
+     "*.*": ".",
+     "*..": "*",
+     ".**": ".",
+     ".*.": ".",
+     "..*": "*",
+     "...": "."}
+
+print("".join(a)),
+while not input():
+    # periodyczne warunki brzegowe
+    a.insert(0, a[-1])
+    a.append(a[1])
+    a = [r["".join(a[i - 1:i + 2])] for i in range(1, n + 1)]
+    print("".join(a)),
+Przykład 2
+W przykładzie reguły zostały zdefiniowane w częsci ustalanie reguł gry - plansza gry umieszczona w stringu zamiast listy - mniej wywołań join
+
+In [0]:
+# losowanie napisu
+from random import random
+
+n = 78
+p = 0.9
+s = "".join(["*" if random() > p else "." for _ in range(n)])
+
+# ustalanie reguł gry
+r = {"***": ".",
+     "**.": ".",
+     "*.*": ".",
+     "*..": "*",
+     ".**": ".",
+     ".*.": ".",
+     "..*": "*",
+     "...": "."}
+
+print(s),
+while not input():
+    # periodyczne warunki brzegowe
+    s = s[-1] + s + s[0]
+
+    # odwzorowanie napisu
+    s = "".join([r[s[i - 1:i + 2]] for i in range(1, n + 1)])
+    print(s),
+Przykład 3
+Wersja z regułami w formie listy - dla języków bez słownika
+
+In [0]:
+# schemat hornera
+def h(A, x):
+    s = 0
+    for a in A:
+        s = s * x + a
+    return s
+
+# losowanie napisu
+from random import random
+
+n = 78
+p = 0.9
+a = [1 if random() > p else 0 for _ in range(n)]
+
+# ustalanie reguł gry w formie listy
+r = [0, 1, 0, 0, 1, 0, 0, 0]
+
+print("".join(["*" if x else "." for x in a])),
+while not input():
+    # periodyczne warunki brzegowe
+    a.insert(0, a[-1])
+    a.append(a[1])
+
+    # odwzorowanie listy
+    a = [r[h(a[i - 1:i + 2], 2)] for i in range(1, n + 1)]
+    print("".join(["*" if x else "." for x in a])),
