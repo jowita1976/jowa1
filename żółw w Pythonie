@@ -1,0 +1,38 @@
+
+Uwaga
+Przed uruchomieniem właściwej części programu należy zainstalować bilbiotekę obsługującą żółwia - do tego celu służy poniższa linijka kodu.
+
+In [0]:
+!pip3 install ColabTurtle
+Przed rozpoczęciem pracy z żółwiem należy go zainicjalizować we własnym kodzie - instrukcja initializeTurtle bez tego żółw nie będzie działał !!!
+
+In [0]:
+from ColabTurtle.Turtle import *
+ 
+initializeTurtle()
+
+color('red')
+n = 0;
+while True:
+    forward(200)
+    left(170)
+    if n > 100:
+        break
+    n += 1
+done()
+Co żółw potrafi?
+forward(n) - idzie naprzód o n jednostek
+backward(n) - idzie wstecz p n jednostek
+right(st) - skręca w prawo o st stopni
+left(st) - skręca w lewo o st stopni
+penup() - przerywa pisanie - podnosi pióro
+pendown() - rozpoczyna pisanie - opuszcza pióro
+speed(t) - zmienia szybkość rysowania
+setx(x) - przesuwa pióro w osi X do położenia x
+sety(y) - przesuwa pióro w osi Y do położenia y
+goto(x, y) - przesuwa pióro do położenia x, y
+showturtle() - wyświetla żółwia
+hideturtle() - ukrywa żółwia
+bgcolor(color) - ustawia kolor tła
+color(color) - ustawia kolor pióra
+width(px) - zmienia szerokość pióra w pikselach
