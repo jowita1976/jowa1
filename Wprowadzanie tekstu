@@ -1,0 +1,112 @@
+In [0]:
+# przygotowanie katalogu roboczego do pracy :)
+import requests
+
+def pobierzPlik(url, nazwaPliku):
+    req = requests.get(url, stream=True)
+    with open(nazwaPliku, 'wb') as uchwytPliku:
+        for chunk in req.iter_content():
+            uchwytPliku.write(chunk)
+
+nazwyPlikow = ['pan_tadeusz.txt']
+for nazwa in nazwyPlikow:
+  pobierzPlik("https://github.com/rroszczyk/Python/raw/master/Pliki/"+nazwa, nazwa)
+In [0]:
+import numpy as np
+
+#wczytanie do programu tekstu Pana Tadeusza
+tadeusz = open('pan_tadeusz.txt', encoding='utf8').read()
+
+#podzielenie tekstu na poszczególne "słowa"
+slowa = tadeusz.split()
+
+# połączenie słów w pary
+pairs = []
+for i in range(len(slowa)-1):
+  pairs.append([slowa[i],slowa[i+1]])
+  
+
+#stworzenie słownika z prefiksami i suffiksami
+word_dict = {}
+for word_1, word_2 in pairs:
+  if word_1 in word_dict.keys():
+    word_dict[word_1].append(word_2)
+  else:
+    word_dict[word_1] = [word_2]
+    
+    
+#generacja
+    
+first_word = np.random.choice(slowa)
+
+while first_word.islower():
+  first_word = np.random.choice(slowa)
+
+chain = [first_word]
+
+n_words = 10
+
+for i in range(n_words):
+  chain.append(np.random.choice(word_dict[chain[-1]]))
+
+' '.join(chain)
+Out[0]:
+'Protazego wnosić można małżeństwem. Stąd droga jegomości; Tylko poprawił kaptur, i'
+In [0]:
+import numpy as np
+
+#wczytanie do programu tekstu Pana Tadeusza
+tadeusz = open('pan_tadeusz.txt', encoding='utf8').read()
+
+#podzielenie tekstu na poszczególne "słowa"
+slowa = tadeusz.split()
+
+# połączenie słów w pary
+pairs = []
+for i in range(len(slowa)-1):
+  pairs.append([slowa[i],slowa[i+1]])
+  
+# połaczenie słów w trójki
+trios = []
+for i in range(len(slowa)-2):
+  trios.append([slowa[i],slowa[i+1],slowa[i+2]])  
+
+#stworzenie słownika z prefiksami i suffiksami
+word_dict = {}
+
+for word_1, word_2 in pairs:
+  if word_1 in word_dict.keys():
+    word_dict[word_1].append(word_2)
+  else:
+    word_dict[word_1] = [word_2]
+
+for trio in trios:
+  prefix = trio[0] + ' ' + trio[1]
+  suffix = trio[2]
+  if prefix in word_dict.keys():
+    word_dict[prefix].append(suffix)
+  else:
+    word_dict[prefix] = [suffix]
+
+
+    
+    
+#generacja
+    
+first_word = np.random.choice(slowa)
+
+while first_word.islower():
+  first_word = np.random.choice(slowa)
+  
+second_word = np.random.choice(word_dict[first_word])
+
+chain = [first_word, second_word]
+
+n_words = 50
+
+for i in range(n_words):
+  chain.append(np.random.choice(word_dict[chain[-2]+' '+chain[-1]]))
+
+' '.join(chain)
+Out[0]:
+'Czapka z uszami, sznurkiem u wierzchu związana, Wznosi się nad ojczystym krajem. A przecież się uwalniał; wiedział o sposobie Rwania więzów, był silny bardzo, ufał sobie. Przemyślał ratować się milczkiem. Oczy zmrużył, Niby śpi; z wolna ustępował, Zniknął z oczu, W inne strony wyjechać, mieszkać na uboczu Lub, co lepsza, wynieść się'
