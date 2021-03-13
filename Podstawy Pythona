@@ -1,0 +1,487 @@
+
+Wprowadzenie do programowania w Python część I
+Standardowym programem pisanym w nowym środowisku jest "Hello World!", którego jedynym zadaniem jest wypisanie na ekranie komputera. Do wypisywania ciągów znaków na ekranie wykorzystywane jest polecenie print. Odpowiedni kod przyjmuje więc postać:
+
+In [0]:
+print("Witaj świecie!")
+Witaj świecie!
+Uwagi:
+
+Python jako jeden z niewielu języków programowania nie potrzebuje zakończenia linijki znakiem średnika. Jego umieszczenie nie jest błędem, ale flagowane jako coś do usunięcia.
+Komenda print nie może być odsunięta od lewej krawędzi pliku ani spacją ani znakiem tabulatora.
+Łańcuchy znaków
+Pierwszym poznanym dla nas typem danych będzie łańcuch znaków (String). W Pythonie występują aż 4 sposoby na ich tworzenie
+
+In [0]:
+print("Witaj świecie!")
+print('Witaj świecie!')
+print('''Witaj świecie!''')
+print("""Witaj świecie!""")
+Witaj świecie!
+Witaj świecie!
+Witaj świecie!
+Witaj świecie!
+Obowiązuje zasada, że znak który otwierał łańcuch musi go zamknąć. Stąd w łańcuchach tworzonych przed "" można np. umieścić ' bez obawy o to że uszkodzą skrypt
+Rezerwuje się znak """ jako znak komentarza dokumentującego i stąd nie zaleca się go tworzenia słów
+Potrójne cudzysłowy można używać do tekstów zajmujących wiele linijek kodu
+Konkatencja
+Konkatencją nazywaną operację łączenia dwóch lub więcej ciągów znaków w pojedynczy ciąg znaków. Przyjrzyjmy się: dwóch linijkom kodu
+
+In [0]:
+print("Witaj","świecie!")
+print("Witaj"+"świecie!")
+Witaj świecie!
+Witajświecie!
+Operacja pierwsza, nie przeprowadza konkatenacji. Pokazuje natomiast, że można przekazać wiele parametrów do funkcji print celem wyświetlenia.
+Operacja druga wykonuje konkatenacje dwóch łańcuchów (operator+) i przekazuje do funkcji print pojedynczy parametr.
+Komentarze
+Praca z programowaniem jest znacznie prostsza kiedy w skrypcie występują odpowiednie komentarze. W Pythonie mamy dwa rodzaje komentarzy:
+
+Komentarz linijkowy rozpoczynany znakiem #
+Komentarz wielolinijkowy (dokumentujący) ograniczany przez """
+In [0]:
+# to jest komentarz
+
+"""
+To jest komentarz wielolinijkowy
+"""
+Out[0]:
+'\nTo jest komentarz wielolinijkowy\n'
+Zmienne
+Zmienne w Python podlegają tzw. leniwej inicjalizacji. Tzn. odpowiednia pamięć jest rezerwowana dopiera w chwili wywołania przypisania. O zmiennych w Pythonie można myśleć jak o etykietach do których mogą być przypisane twory dowolnych typów.
+Nie ma zatem potrzeby deklarowania typu dla zmiennych, jak np. w Javie czy C++. Nie oznacza to jednak, że Python nie ochrania zmiennych przed próbami zmiany typów. Typy są pilnowanen tylko z programisty został zdjęty obowiązek jawnego ich ogłoszenia. Przypomina to po części mechanizm auto z języka C++, ale naprawdę jego budowa jest zdecydowanie inna (gdyż auto tworzy zmienne w pamięci operacyjnej, natomiast przypisania w pythonie dotyczą jedynie etykiet.
+Tak jak w większości języków programowania do tworzenia zmiennych używany jest operator= czyli tzw. operator przypisania.
+In [0]:
+x=3
+y=4
+print(x,"+",y,"=",x+y)
+3 + 4 = 7
+Rzutowanie zmiennych
+Możliwa jest bardzo prosta zmiana typu danych dla typów podstawowych. Wystarczy odnosić się po prostu do typów w połączeniu z operatorem (), tj. operacjami
+
+int()
+float()
+str()
+In [0]:
+x = 3.14
+calkowity_x = int(x)
+print(calkowity_x)
+3
+Podstawowe kolekcje
+Częściej od zmiennych przechowujących pojedyncze dane potrzebować będziemy struktur przechowujących duże ich zbiory tj. kolekcje.
+
+W Pythonie występują 3 podstawowe kolekcje
+
+Krotki - odpowiedniki tablic, ale bez ograniczeń typowych
+Listy - rozszerzalne struktury dynamicznie
+Słowniki - tablice asocjacyjne, mapy.
+Krotki
+Krotki uzyskujemy grupując kilka zmiennych z wykorzystaniem nawiasu i przecinka jako symbolu rozdzialającego
+
+In [0]:
+x = "Witaj"
+y = "Świecie"
+krotka= (x, y)
+In [0]:
+print(krotka)
+('Witaj', 'Świecie')
+Krotki są tworą niezmienniczymi (Immutable). Nie można zmodyfikować składowych krotek. Ich przetwarzanie pozwala jedynie na kopiowanie poszczególnych składowych.
+
+Do uzyskania dostępu do składowych wykorzystywany jest operator$[]$. W nawias wprowadzane są interesujące nas indeksy. Tablice w Pythonie numerowane są od 0 w górę. Można również odnosić się do tablic w numeracji od końca z wykorzystaniem indeksów ujemnych (-1,-2,...). Oraz zakresów
+
+In [0]:
+x="Witaj"
+y="Świecie"
+krotka=(x,y,x,y,x,x,y)
+print(krotka[1]) 
+print(krotka[-2])
+print(krotka[0:3])
+print(krotka[:]) #kopia całej krotki
+#krotka[2]="Slonce" #błąd krotka jest niezmiennicza
+Świecie
+Witaj
+('Witaj', 'Świecie', 'Witaj')
+('Witaj', 'Świecie', 'Witaj', 'Świecie', 'Witaj', 'Witaj', 'Świecie')
+Listy
+Listy to dynamicznie rozszerzalne tablice. Można je tworzyć poprzez nawiasy $[]$
+
+In [0]:
+x= "Witaj"
+y= "Świecie"
+lista= [x,y]
+pusta_lista = []
+Listy są rozszerzalne i zmiennicze (mutable). Można wstawiać, zmieniać i usuwać jej elementy; Dostęp uzyskujemy analogicznie jak w przypadku krotek
+
+In [0]:
+lista.append('jesteś wspaniały')
+print(lista)
+['Witaj', 'Świecie', 'jesteś wspaniały']
+In [0]:
+lista[1] ='mój świecie'
+print(lista)
+['Witaj', 'mój świecie', 'jesteś wspaniały']
+Słowniki
+Słowniki są odpowiednikami map, nazywamy również tablicami asocjacyjnymi. Pozwalają przechowywać przypisane do siebie argumenty i wartości na zasadach klucz : wartość. Wytwarzamy je z wykorzystaniem nawiasów {} rozdzielając klucze i wartości symbolem :
+
+In [0]:
+slownik = { "koń": "horse", "pies": "dog", "matematyka": "mathematics" }
+print(slownik["matematyka"])
+mathematics
+Komendy sterujące
+Bloki kodu
+Wspominane było, że linie kodu nie mogą być poprzedzone znakiem spacji czy tabulatora. Wyjaśnimy czemu do tej pory tak musiało być. Powodem są bloki kodu
+
+Blokiem kodu nazywamy ciągi instrukcji posiadających własną przestrzeń nazw (dodatkową) wyszczególnioną w specjalny sposób.
+
+Bloki kodu są np. wykonywane w instrukcjach warunkowych czy pętlach. W javie czy c++ np.
+
+if (warunek) {
+   \\Blok instrukcji
+   czynnosc1();
+   czynnosc2();
+}
+Najcześciej spotykane w programowaniu jest grupowanie bloków z wykorzystaniem nawiasów klamrowych. Oprócz tego wszyscy programiści zalecali robienie wcięć dla instrukcji w bloku - aby wyszczególnić jednakowe przestrzenie nazw i odróżniać instrukcje warunkowe od ogólnych, powtarzane od jednokrotnych.
+
+Twórcy Pythona dostrzegli w tym nadmiarowość formy. Zdecydowali się odrzucić klamry. W ten sposób bloki kodu określane są na podstawie wcięć kodu.
+
+Jak wygląda praca z tymi wcięciami przekonamy się już za chwilę:
+
+Miejsca gdzie występują bloki kodu:
+
+Instrukcje warunkowe
+Pętle
+Funkcje
+Implementacje klas
+Bloki with
+Instrukcja warunkowa IF
+Podstawową instrukcją warunkową w Pythonie jest if-elif-else. Podobnie jak w innych technologiach programistycznych, bloki elif i else można pomijać. Ogólna postać takiej instrukcji wygląda następująco:
+
+if warunek1:
+    #czynnosc1
+elif warunek2:
+    #czynnosc2
+else:
+    #czynnosc3
+Np:
+
+In [0]:
+x = 5
+if x % 2 == 1:
+    print('X jest liczbą nieparzystą')
+else:
+    print('X jest liczbą parzystą')
+print('Tu blok już się zakończył i wykonuje się on niezależnie od wartości sprawdzanego warunku')
+X jest liczbą nieparzystą
+Tu blok już się zakończył i wykonuje się on niezależnie od wartości sprawdzanego warunku
+Instrukcja warunkowa musi mieć blok if
+Instrukcja może mieć najwyżej jeden blok else,
+Instrukcja może mieć dowolną ilość bloków elif
+Koniec wcięcia oznacza koniec bloku,
+Linijka początkowa bloku musi kończyć się znakiem :
+IF połączone z IN
+Z instrukcją if możemy łatwo sprawdzać czy element występuje we wskazanej a wcześniej poznanej kolekcji. Np. czy ciąg znaków zawiera daną literę:
+
+In [0]:
+zdanie = "Ala ma kota!"
+if "k" in zdanie:
+    print("Zdanie ma literke k")
+if "kot" in zdanie:
+    print("Zdanie ma kota!")
+Zdanie ma literke k
+Zdanie ma kota!
+Pętle For
+Język Python wspiera również wykonywanie powtarzalnych obliczeń z wykorzystaniem konstrukcji pętli. Najczęściej do realizacji powtórzeń w Pythonie stosowana jest pętla for
+
+wykorzystująca kolekcje: for element in lista: #blok instrukcji
+wykorzystująca licznik: for i in range(begin,end,step): #blok instrukcji
+In [0]:
+lista = ['raz', 'dwa', 'trzy']
+for element in lista:
+    print('Teraz kolej na', element)
+
+for i in range(0,10,2):
+    print('Kolejna liczba to ',i)
+Teraz kolej na raz
+Teraz kolej na dwa
+Teraz kolej na trzy
+Kolejna liczba to  0
+Kolejna liczba to  2
+Kolejna liczba to  4
+Kolejna liczba to  6
+Kolejna liczba to  8
+Pętle while
+Czasem spotykamy również inny rodzaj pętli - pętle while
+
+while warunek:
+    #blok kodu
+In [0]:
+i = 0
+while i <= 10:
+    i += 1
+    print('Obecna wartosc to ', i)
+Obecna wartosc to  1
+Obecna wartosc to  2
+Obecna wartosc to  3
+Obecna wartosc to  4
+Obecna wartosc to  5
+Obecna wartosc to  6
+Obecna wartosc to  7
+Obecna wartosc to  8
+Obecna wartosc to  9
+Obecna wartosc to  10
+Obecna wartosc to  11
+Najczęściej jest ona wykorzystywana razem z komendami break i continue
+
+break - powoduje przerwanie działania petli i opuszczenie jej całkowicie
+continue - powoduje natychmiastowe przejście do wykonywania następnej petli
+In [0]:
+i = 0
+while True:
+    i += 1
+    if (i % 7 == 0): 
+        continue
+    if (i >= 15):
+        break
+    print('Przetwarzam ', i)
+Przetwarzam  1
+Przetwarzam  2
+Przetwarzam  3
+Przetwarzam  4
+Przetwarzam  5
+Przetwarzam  6
+Przetwarzam  8
+Przetwarzam  9
+Przetwarzam  10
+Przetwarzam  11
+Przetwarzam  12
+Przetwarzam  13
+Funkcje
+Python pozwala w sposób dość swobodny tworzyć funkcje. Zanim jednak utworzymy pierwszą kilka uwag o zasadach ich tworzenia:
+
+W odróżnieniu od wielu języków programowania w Pythonie nie ma możliwości przeciążania funkcji. W danej przestrzeni nazw może występować tylko raz nazwa danej funkcji
+Parametry z wartością domyślną muszą być podane na końcu
+Funkcje poprzedzone są słowem kluczowym def
+Python wspiera funkcje lambda (* więcej o nich w części rozszerzonej)
+In [0]:
+def moja_funkcja(x, parametry):
+    """
+    Komentarz o funkcji
+    """
+    return x+1
+In [0]:
+print(moja_funkcja(1,0))
+2
+Funkcje zwracające krotki
+W pythonie wreszcie został wprowadzony sprawny mechanizm automated-unboxing. Pozwala on na łatwy i czytelny na zwracanie więcej niż jednej wartości. Mechanizm wymaga jednak aby zawsze zwrócone były wszystkie elementy wyniku funkcji (oraz przyjęte)
+
+In [0]:
+def moja_funkcja():
+    x="Zmienna 1 ma wartosc"
+    y=3
+    return x, y
+
+#krotka = moja_funkcja() # tak można już było wcześniej
+#a = krotka[0]
+#b = krotka[1]
+a, b = moja_funkcja() # a tak dopiero w Pythonie
+print('A wynosi', a)
+print('B wynosi', b)
+A wynosi Zmienna 1 ma wartosc
+B wynosi 3
+Operatory
+W Pythonie najprostszymi funkcjami są operatory. Czyli akcje wykonywane przez Python w odpowiedzi na znaki +,- oraz podobne. W Pythonie istnieją następujące grupy operatorów
+
+arytmetryczne,
+relacyjne (porównawcze),
+logiczne,
+bitowe,
+przypisania,
+identycznościowe,
+przynależności.
+Operatory arytmetyczne
+Do operatorów zaliczamy
+
+dodawanie '+'
+odejmowanie '-'
+mnożenie '*'
+dzielenie '/'
+dzielenie modulo '%'
+potęgę '**'
+dzielenie całkowitoliczbowe '//'
+Do najciekawszego do zaprezentowania tu jest różnica pomiędzy dwoma rodzajami dzieleń. W znacznej większości języków programowania operatory zwracaja zawsze typ zgodny z operandami. W efekcie zdarza się, że programista bywa czasem zaskoczony działaniem swojego programu. Np. w C++
+
+int x = 3;
+int y = 2;
+cout << x/y;
+zwróciło by jako wynik $1$. Twórcy Pythona uznali, że warto złamać zasadę o zgodności typów wyniku i operandu - bo w większości przypadków dla powyższego kodu programista spodziewałby się otrzymać 1.5. Istotnie
+
+In [0]:
+x = int(3)
+y= int(2)
+wynik = x/y
+print(wynik)
+print(type(wynik))
+1.5
+<class 'float'>
+Jednak aby osługiwać pryzpadki w których programiście właśnie na uzyskaniu wyniku całkowitoliczbowego zależało - dodano kolejny operator '//'.
+
+In [0]:
+print(x//y)
+1
+Operatory relacyjne
+Wśród operatorów relacyjnych wyróżniamy
+
+równość '=='
+nierówność '!='
+mniejsze oraz większe ('<' i '>')
+mniejsze lub równe oraz większe lub równe ('<=' i '>=')
+In [0]:
+if 3 < 5:
+    print('3 jest mniejsze od 5')
+3 jest mniejsze od 5
+Co ciekawe dopuszczalne są również (a niedostępne w innych językach programowania) następujące ciągi relacji
+
+In [0]:
+liczba = 4
+if 3 < liczba <= 5:
+    print('Liczba ta należy do przedziału (3,5]')
+Liczba ta należy do przedziału (3,5]
+Operatory logiczne
+Specjalna grupa operatorów jest zarezerwowana dla typów logicznych. Wyszczególniamy
+
+logiczne i 'and',
+logiczne lub 'or',
+logiczne nie 'not'.
+In [0]:
+liczba = 14
+if liczba % 3 == 0 and liczba % 2 ==0 :
+    print('Liczba jest podzielna przez 3 oraz 2')
+else :
+    print('Liczba nie jest podzielna przez 3 oraz 2')
+Liczba nie jest podzielna przez 3 oraz 2
+Operatory bitowe
+Operatory bitowe są stosowane do pracy na bitowych reprezentacjach dla danych. Dla operatorów tych nie jest istotne jaki typ danych przekształcają gdyż zawsze pracują na ich bitowym zapisie.
+
+Operatorami takimi są
+
+Bitowe i '&' - gdzie dany bit zostaje ustalony na 1 tylko jeśli oba operandy miały 1 na tym bicie
+Bitowe lub '|' - gdzie dany bit zostaje ustalony na 1 tylko jeśli dowolny operand miał 1 na tym bicie
+Bitowe xor '^' - gdzie dany bit zostaje ustalony na 1 tylko jeśli dokładnie jeden operand miał 1 na tym bicie
+Bitowe not '~' - gdzie dany bit zostaje ustalony na 1 tylko jeśli operand (jedyny operand) miał 0 na tym bicie
+Bitowe przesunięcie w lewo '<<' - gdzie bity są przesuwane zgodnie w reprezentacji na miejsca bardziej po lewo, bity wysunięte poza zakres są tracone, a od lewej strony reprezentacja jest uzupełniana zerami
+Bitowe przesunięcie w prawo '>>' - gdzie bity są przesuwane zgodnie w reprezentacji na miejsca bardziej po prawo, bity wysunięte poza zakres są tracone, a od lewej strony reprezentacja jest uzupełniana zerami
+In [0]:
+x = 0b0011 #tak można zadawać liczby w postaci dwójkowej
+y = 0b1110
+print('x ma wartość', x, 'y ma wartość', y)
+x ma wartość 3 y ma wartość 14
+In [0]:
+z = x & y
+print('Wynik {0:{fill}4b}'.format(z,fill='0'))
+Wynik 0010
+Zaprezentujemy jeszcze działanie przesuniecia
+
+In [0]:
+print('Wynik {0:{fill}4b}'.format(x<<1,fill='0'))
+Wynik 0110
+Operatory przypisania
+Kolejną grupą operatorów są operatory przypisania. Do grupy tej zaliczamy
+
+operator '=',
+operatory przypisania arytmetycznego '+=', '-=', '*=', '/=', '%=', '//=', '**=',
+operatory przypisania logicznego '&=', '|=', '^=',
+operatory przypisania przesuniętego, '<<=' i '>>='
+Pierwszy operator służy do przypisania wartości do zmiennej
+
+zmienna = wartosc
+Przede wszystkim nie należy pomylić operatora relacyjnej równości z tym operatorem. Pozostałe operatory mają łatwe do zrozumienia działanie. Widząc linijkę z operatorem
+
+zmienna ?= wartosc
+(? jest dowolnym z dopuszczalnych symboli) nalezy widzieć wykonanie następującej akcji
+
+zmienna = zmienna ? wartosc
+I tak
+
+In [0]:
+x = 5
+x += 3
+print(x)
+8
+Operatory identycznościowe
+Są operatorami mającymi za zadanie sprawdzić czy dany dwie etykiety przechowują ten sam lub nie ten sam obiekt. Operatorami tymi są
+
+is
+is not Sens prezentuje poniższy przykład
+In [0]:
+a = [5]
+b = [5]
+if a is b:
+    print('To ten sam obiekt')
+else :
+    print('To różne obiekty')
+    
+if a == b:
+    print('Obiekty mają takie same wartości')
+To różne obiekty
+Obiekty mają takie same wartości
+In [0]:
+a = [5]
+b = a
+if a is b:
+    print('To ten sam obiekt')
+else :
+    print('To różne obiekty')
+    
+if a == b:
+    print('Obiekty mają takie same wartości')
+To ten sam obiekt
+Obiekty mają takie same wartości
+Co ciekawe rozpoznanie to nie działa na typach prostych
+
+In [0]:
+a = 5
+b = 5
+a is b
+Out[0]:
+True
+Najczęściej jednak operatora tego stosuje się do kontroli typu
+
+In [0]:
+a = 5
+type(a) is int
+Out[0]:
+True
+In [0]:
+type(a) is not str
+Out[0]:
+True
+Często wykorzystuje się go do sprawdzenia czy dany obiekt został zainicjowany
+
+In [0]:
+a = None
+
+if a is None:
+    print('a jest niezainicjowane')
+else:
+    print('a jest zainicjowane')
+a jest niezainicjowane
+Operatory przynależności
+Ostatnią grupą operatorów są te które weryfikują czy element należy do kolekcji. Są to dwa operatory
+
+in
+not in
+z klasycznymi przykładami
+
+In [0]:
+zoo = ['lew', 'słoń', 'małpa']
+if 'kot' in zoo:
+    print('Zoo ma kota')
+else:
+    print('Zoo nie ma kota')
+Zoo nie ma kota
+oraz
+
+In [0]:
+if 'm' in 'Ala ma kota':
+    print('W zdaniu Ala ma kota występuje literka m')
+W zdaniu Ala ma kota występuje literka m
