@@ -1,0 +1,549 @@
+
+Open In Colab
+Wprowadzenie do języka Python - konstrukcje zaawansowane
+W tej części przedstawimy elementy częściej i rzadziej stosowane w Pythonie - które obejmują już rozszerzoną część do wstępu do programowania w Python.
+
+Szybka inicjalizacja kolekcji
+W Python występuje pewna często wykorzystywana metoda na szybkie inicjalizowanie kolekcji poprzez przetwarzanie innych kolekcji. Łączy ona w sobie symbole listy oraz pętle
+
+In [0]:
+kolekcja = [i for i in range(0,10,2)]
+print(kolekcja)
+[0, 2, 4, 6, 8]
+Można dodać pewne przekształcenia
+
+In [0]:
+kolekcja = [i*i+2 for i in range(0,10,2)]
+print(kolekcja)
+[2, 6, 18, 38, 66]
+Tak samo daje się zrobić poprzez przekształcanie innych kolekcji
+
+In [0]:
+kolekcja_orig = ['kot', 'pies', 'żółw']
+kolekcja_moja = [ 'mój '+i for i in kolekcja_orig ]
+print(kolekcja_moja)
+['mój kot', 'mój pies', 'mój żółw']
+Można również łączyć powyższe z waunkowością
+
+In [0]:
+parzyste = [i for i in range(0, 20) if i % 2 == 0]
+print(parzyste)
+[0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
+Lub z warunkową wartością
+
+In [0]:
+tablica_parzystych = [ 'L: '+str(i)+' parzysta' if i % 2 ==0 else 'L: '+str(i)+' nieparzysta' for i in range(0,20) ]
+print(tablica_parzystych)
+['L: 0 parzysta', 'L: 1 nieparzysta', 'L: 2 parzysta', 'L: 3 nieparzysta', 'L: 4 parzysta', 'L: 5 nieparzysta', 'L: 6 parzysta', 'L: 7 nieparzysta', 'L: 8 parzysta', 'L: 9 nieparzysta', 'L: 10 parzysta', 'L: 11 nieparzysta', 'L: 12 parzysta', 'L: 13 nieparzysta', 'L: 14 parzysta', 'L: 15 nieparzysta', 'L: 16 parzysta', 'L: 17 nieparzysta', 'L: 18 parzysta', 'L: 19 nieparzysta']
+Pętla while-else?
+W składni Pythona występuje również pętla z klauzulą 'else'. Jest to coś niespotykanego w innych językach programowania
+
+In [0]:
+liczba = 0
+while liczba < 5:
+  print("W petli")
+  liczba+=1
+else:
+  print("Koniec przez 'else'")
+W petli
+W petli
+W petli
+W petli
+W petli
+Koniec przez 'else'
+Rodzi to pytanie wielu osób zajmujących się programowaniem - czemu tego używać? Prezentujemy przykład pokazujący zasadę używania:
+
+In [0]:
+liczba = 3
+while liczba < 20 :
+  print("W pętli")
+  if (liczba <= 0):
+    break
+  liczba += 1
+  liczba *= liczba
+else:
+  print("Koniec przez 'else'")
+print("Koniec petli")
+W pętli
+W pętli
+Koniec przez 'else'
+Koniec petli
+In [0]:
+liczba = -3
+while liczba < 20 :
+  print("W pętli")
+  if (liczba <= 0):
+    break
+  liczba += 1
+  liczba *= liczba
+else:
+  print("Koniec przez 'else'")
+print("Koniec petli")
+W pętli
+Koniec petli
+Pętle while-else wykorzystujemy wiec w sytuacji gdy chcemy wykonać określoną liczbę pętli i zakończyć je pewnym kodem. Dopuszczamy jednak możliwość, że w trakcie wykonywania pętli dojdzie do sytuacji, kiedy ta dodatkowa klauzula nie powinna się wykonać.
+
+Powyższa petla nie należy do najczęściej stosowanych instrukcji języka Pythona. Należy ją traktować jako ciekawostkę.
+
+Funkcje lambda
+Funkcje lambda są elementem programowania funkcyjnego, który przenika do coraz większej liczby języków programowania strukturalno-obiektowego. Pozwalają one tworzyć proste funkcje tak jak tworzy się zmienne. Składnia jest prosta i przyjemna:
+
+In [0]:
+plus_one = lambda x : x+1
+print( plus_one(3) )
+4
+Funkcje lambda wykorzytywane są coraz częściej do skrócenia pewnych form zapisu w kodzie.
+
+Choć Python narzuca pewne ograniczenia na to co dzieje w funkcjach lambda - może tam się dziać naprawdę wiele rzeczy - np instrukcja warunkowaFunkcje lambda wykorzytywane są coraz częściej do skrócenia pewnych form zapisu w kodzie.
+
+Choć Python narzuca pewne ograniczenia na to co dzieje w funkcjach lambda - może tam się dziać naprawdę wiele rzeczy - np instrukcja warunkowa
+
+In [0]:
+kolekcja = [i for i in range(10)]
+parzystosc = lambda x : 'TAK' if x%2==0 else 'NIE'
+parzystosc_kolekcja = [ parzystosc(i) for i in kolekcja]
+print(parzystosc_kolekcja)
+['TAK', 'NIE', 'TAK', 'NIE', 'TAK', 'NIE', 'TAK', 'NIE', 'TAK', 'NIE']
+Inne nietypowe elementy
+Obiekt None
+Spośród wielu obiektów występujących w Pythonie, nie wiele jest równie ciekawych co obiekt None. Aby wogóle zacząć od wyobrażenia sobie tego czym jest None, odwołamy się do analogii.
+
+W C++
+
+Klasa* obiekt = nullptr;
+czy w Javie
+
+String s = null;
+było bardzo powszechną konstrukcją. Obiekty były tam przechowywane pod postacią referencji do nich, a wsród nich była możliwość ustawienia referencji na pusty adres pamięci tj. null. Praktycznie None ma bardzo podobne zachowanie i zastosowanie.
+
+Jest kilka pragmatycznych różnic pomiędzy wymienionymi. None nie jest adresem, jest obiektem. I to obiektem specjalnego typu NoneType.
+
+In [0]:
+zmienna = None
+print(zmienna)
+None
+In [0]:
+type(zmienna)
+Out[0]:
+NoneType
+Do radzenia sobie z None należy używać specjalnych struktur w if-ach
+
+In [0]:
+a = None
+if a is None:
+    print('A is None')
+    
+b = 7 
+if b is not None:
+    print('B is not None')
+A is None
+B is not None
+None najczęściej używany jest do oznaczenia zmiennych czy obiektów, które dopiero zostaną utworzone i na razie wymagają szczególnego oznaczenia, że nie jeszcze nie istnieją.
+
+Operacja pass
+jest jeszcze polecenie pass. Najczęściej używamy je w funkcjach by oznaczyć, że na chwilę obecną brakuje w nich implementacji.
+
+In [0]:
+a = 7 
+if a % 2 == 0:
+    pass
+else:
+    print('nieparzysta')
+
+
+def jakas_funkcja():
+    pass
+nieparzysta
+Instrukcja taka jest potrzebna w języku Python, gdyż nie ma możliwości tworzenia pustych bloków.
+
+Klauzula with
+Klauzula with służy do pracy z tzw. kontekstami. Najprościej można je rozumieć jak tworzenie bloku do pracy z pewnym zewnętrznym względem Pythona narzędziem. Przykładem może tu być praca z otwartym plikiem na dysku, zasobem internetowym, czy innym programem systemu operacyjnego.
+
+In [0]:
+with open('readme.txt', 'r') as plik:
+    dane = plik.read()
+    print('Czy plik jest zamknięty ', plik.closed)
+print(dane)
+print('Czy plik jest zamknięty ', plik.closed)
+---------------------------------------------------------------------------
+FileNotFoundError                         Traceback (most recent call last)
+<ipython-input-15-3eb8733bf2fc> in <module>()
+----> 1 with open('readme.txt', 'r') as plik:
+      2     dane = plik.read()
+      3     print('Czy plik jest zamknięty ', plik.closed)
+      4 print(dane)
+      5 print('Czy plik jest zamknięty ', plik.closed)
+
+FileNotFoundError: [Errno 2] No such file or directory: 'readme.txt'
+Należy stąd wyciągnać następującą obserwację
+
+Przy wykorzystaniu with w bloku zamkniete są wszystkie operacje wykonywane na danym kontekście
+blok zarządza tym aby operacje otworzenia i zamknięcia danego kontekstu zostały należycie wykonane (np. poczeka na otwarcie zamknięcie pliku)
+Dalej przyjrzymy się jeszcze czego potrzeba aby napisać własny kontekst (UWAGA! wymaga przerobienia kursu z programowania obiektowego)
+
+In [0]:
+class MojeDane(object):
+    
+    def __init__(self):
+        self._data = []
+        
+    def add(self, item):
+        self._data.append(item)
+        
+    def show(self):
+        print(self._data)
+        
+        
+class MojKontekst(object):
+    
+    def __init__(self, md: MojeDane):
+        print('Utworzono kontekst')
+        self._dane = md
+        
+    def __enter__(self):
+        print('Wywołano enter')
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        print('Wywołano exit')
+
+
+print('Zaczynami')
+md = MojeDane()
+with MojKontekst(md):
+    print('Zaczeliśmy')
+    md.add(3)
+    md.show()
+print('Zakonczylismy')
+Zaczynami
+Utworzono kontekst
+Wywołano enter
+Zaczeliśmy
+[3]
+Wywołano exit
+Zakonczylismy
+Moduły w Python
+W niniejszej lekcji wprowadzimy sobie rzeczy niezbędne do tworzenia większych projektów z wykorzystaniem języka Python. Komponentem tym są moduły, Python umożliwia bowiem bardzo wygodne grupowanie skryptów. W niniejszej lekcji pokażemy zarówno jak wzywać do pracy moduły napisane przez programistów i umieszczone w repozytoriach kodu, jak i samodzielnie tworzyć takie moduły.
+
+Tworzenie własnych modułów
+W większości języków programowania tworzenie modułów okazuje się być czymś zaawansowanym, nie czymś czego można się nauczyć od początku. Inaczej zupełnie jest w Pythonie. Jest tak dlatego, że moduły są wyrażane przez bardzo zwykłe elementy, którymi są
+
+katalogi, oraz
+pliki.
+Tworzy to prostą strukturę wszelkich nazw w postaci 'ścieżka katalogowa' - 'plik' - 'nazwa w pliku'. Aby utworzyć nowe moduły wystarczy wybrać na projekcie PPM i utworzyć Python Package. PyCharm utworzy dodatkowo plik $__init__.py$ w którym znajdują się wartości inicjowane przy imporcie modułu (ale który nie powienien być przez nas edytowany na tym etapie). Poza tym pełnią jedynie funkcje informacyjną, że katalog zawiera moduły Pythona. W katalogach tych można przechowywać wiele plików skryptów Pythona.
+
+Utwórzmy zatem pakiet o nazwie 'paczka', w nim utwórzmy nowy skrypt pythona o nazwie 'plik_w_paczce'
+
+Zdefiniujmy w pliku_w_paczce następującą funkcje:
+
+def powiedz_hello():
+    print('Hello')
+Aby użyć tej funkcji w skrypcie testowy należy odpowiednio go zaimportować
+
+In [0]:
+from paczka.plik_w_paczce import powiedz_hello
+
+print('Wykorzystajmy kod z modułu paczka')
+powiedz_hello()
+Możliwe jest również zmienienie w locie importowanej nazwy - zgodnie z poniższym przykładem
+
+In [0]:
+from paczka.plik_w_paczce import powiedz_hello as importowana_funkcja
+
+print('Wykorzystajmy kod z modułu paczka')
+importowana_funkcja()
+Wykorzystajmy kod z modułu paczka
+Hello
+Importowanie modułów
+Aby zaimportować moduł należy użyć następującej składni
+
+import plik
+import moduł.plik
+import moduł.submoduł.plik
+from plik import *
+from plik import nazwa
+from moduł.plik import *
+from moduł.plik import nazwa1, nazwa2
+Ponadto z uwagi na to, że przestrzenie nazw poszczególnych modułów mogą zawierać duplikujące się nazwy. Często stosowany jest zatem zabieg przezwania.
+
+import nazwa_modułu as przezwanie
+from moduł import nazwa_w_pliku as przezwanie
+Uwaga
+Nie należy nazywać projektów lub modułów nazwami takimi jak znane i zainstalowane pakiety Pythona
+
+Instalacja modułow zewnętrznych
+Teraz kiedy mamy już z grubsza opanowane tworzenie własnych modułów, wiemy już jak wezwać do pracy cudze moduły. Do uzupełnienia brakuje jednak jednej rzeczy. Jak pobrać te skrypty do siebie na komputer? Python posiada specjalnie wbudowany w siebie program do łączenie się ze zdalnymi repozytoriami kodu celem ich pobrania. Instalacja dodatkowych pakietów odbywa się często poprzez system operacyjny (poza PyCharm).
+
+Podstawowy tryb instalacji
+PyCharm w znacznej większości przykładów pozwoli nam automatycznie dołączyć porządany pakiet (o ile pracujemy z wirtualnym środowiskiem) Z poziomu pycharm dodajemy w pliku linijkę
+
+import numpy
+Kiedy Pycharm podkreśli nam brak takiego pakietu wykonujemy kombinację klawiszy alt+enter (klikamy kursorem w podkreślenie i wciskamy) i wybieramy instalację brakującego pakietu.
+
+Alternatywnie pod ścieżką Plil->Ustawienia->Project:->Project interpreter można za pomocą przycisku + wywołać okno instalacji do nowych pakietów. W miejscu tym można również wybrać interpreter dla projek
+
+Zaawansowany tryb instalacji
+Poniższa instrukcja jest tutaj podana jedynie na potrzeby wystąpienia problemów z instalacją pakietów.
+
+Aby pobrać nowe pakiety z poziomu systemu operacyjnego wchodzimy do katalogu Scripts (lub bin) w VirtEnv, które założyliśmy. Powinniśmy być w stanie odszukać tam program python (lub python.exe). W tym katalogu uruchamiamy okno konsoli/terminal.
+
+Są dostępne dwa warianty
+
+Jeśli dostępny jest tam obok program o nazwie pip stosujemy pierwszą formułę.
+Jeśli nie jest ten program tam dostępny - nie poddajemy się i stosujemy drugą formułę.
+Pierwsza formuła dla linux
+
+./pip install nazwa_modułu
+Pierwsza formuła dla windows
+
+pip.exe install nazwa_modułu
+Druga formuła dla linux
+
+./python -m pip install nazwa_modułu
+Druga formuła dla windows
+
+python.exe -m pip install nazwa_modułu
+Problemy z dostępem do konsoli
+Niektóre komputery z windows mają jednak zablokowany dostęp do konsoli. Należy traktować to w ramach niedogodności. Równorzędnie z uruchomieniem w konsoli, możliwe jest utworzenie skryptu .bat. Tworzymy plik testowy w katalogu z programem python/pip o następującej treści
+
+{}
+pip.exe install nazwa_modułu > log.txt
+Następnie zmieniamy jego rozszerzenie z .txt na .bat. i klikamy na niego celem wykonania. Niestety w tym wypadku mamy małe pole do obserwowania efektów jego działania.
+
+Praca z podstawowymi pakietami Pythona
+Wprowadźmy kilka naprawdę podstawowych pakietów Pythona do podstawowej pracy
+
+Pakiet math
+Pakiet math dostarcza podstawowe matematyczne funkcje
+
+In [0]:
+import math
+
+x = 3.1415
+print(math.ceil(x))
+print(math.floor(x))
+
+x = -3
+print(math.fabs(x))
+
+print(math.factorial(4))
+
+print(math.exp(1))
+
+print(math.log(2, 2))
+
+print(math.pow(7, 3))
+
+print(math.sin(math.pi))
+4
+3
+3.0
+24
+2.718281828459045
+1.0
+343.0
+1.2246467991473532e-16
+Pakiet Random
+Kolejnym pakietem jest pakiet Random dostarczającym podstawowe sposoby na generowanie liczb losowych
+
+In [0]:
+import random
+
+sample = random.randint(1, 6)
+
+print('Losowy wynik to ', sample)
+Losowy wynik to  3
+Pakiet OS
+Dalej jest pakiet OS, który dostarcza Pythonowi narzędzia do pracy z systemem plikow uruchomionym wyżej, tj. plikami, katalogami
+
+In [0]:
+from os import listdir
+
+dirs = listdir()
+for dir in dirs:
+    print('Element ', dir)
+Element  .config
+Element  sample_data
+Pozwala sprawdzić czy dany plik istnieje
+
+In [0]:
+import os.path
+
+if os.path.exists('testowy.py'):
+    print(('Plik istnieje'))
+else:
+    print('Plik nie istnieje')
+Plik nie istnieje
+PyFormat
+W Pythonie mamy dostępne zaawansowane metody wypisywania i formatowania ciągów znaków tj. Stringów.
+
+Np. aby wypisać liczby w postaci binarnej
+
+In [0]:
+for i in range(10):
+    print("{0:b}".format(i))
+0
+1
+10
+11
+100
+101
+110
+111
+1000
+1001
+Lub w postaci szestnastkowej (HEXy)
+
+In [0]:
+for i in range(16):
+    print("{0:02X}".format(i))
+00
+01
+02
+03
+04
+05
+06
+07
+08
+09
+0A
+0B
+0C
+0D
+0E
+0F
+Inne przykłady składania PyFormat
+
+In [0]:
+print('{} {}'.format('one', 'two'))
+print('{} {}'.format(1, 2))
+print('{1} {0}'.format('one', 'two')) 
+print('{:>10}'.format('test'))
+print('{:10}'.format('test'))
+print('{:_<10}'.format('test'))
+print('{:^10}'.format('test'))
+print('{:^6}'.format('zip'))
+print('{:.5}'.format('xylophone'))
+print('{:10.5}'.format('xylophone'))
+one two
+1 2
+two one
+      test
+test      
+test______
+   test   
+ zip  
+xylop
+xylop     
+Dla liczb natomiast mamy jeszcze dostępne formatowania
+
+In [0]:
+print('{:d}'.format(42))
+print('{:f}'.format(3.141592653589793))
+print('{:4d}'.format(42))
+print('{:06.2f}'.format(3.141592653589793))
+print('{:04d}'.format(42))
+print('{:+d}'.format(42))
+print('{: d}'.format((- 23)))
+print('{: d}'.format(42))
+print('{:=+5d}'.format(23))
+data = {'first': 'Hodor', 'last': 'Hodor!'}
+print('{first} {last}'.format(**data))
+print('{first} {last}'.format(first='Hodor', last='Hodor!'))
+person = {'first': 'Jean-Luc', 'last': 'Picard'}
+print('{p[first]} {p[last]}'.format(p=person))
+data = [4, 8, 15, 16, 23, 42]
+print('{d[4]} {d[5]}'.format(d=data))
+from datetime import datetime
+print('{:%Y-%m-%d %H:%M}'.format(datetime(2001, 2, 3, 4, 5)))
+42
+3.141593
+  42
+003.14
+0042
++42
+-23
+ 42
++  23
+Hodor Hodor!
+Hodor Hodor!
+Jean-Luc Picard
+23 42
+2001-02-03 04:05
+Więcej przykładów na stronie
+
+Obsługa wyjątków w Python
+Python podobnie jak większość języków programowania pozwala na tworzenie, zgłaszanie i obsługiwanie wyjątków.
+
+Czym jest wyjątek? Jest sytuacją w działaniu programu, która uniemożliwia poprawne wykonanie części skryptu. Podobnie jak w Javie, kod który może nie zakończyć się poprawnym wykonaniem zgromadzić w bloku try
+
+In [0]:
+tekst = "nie liczba"
+try :
+  x = int(tekst)
+except ValueError:
+  print("Zła wartość, ale")
+print("Juz w porzadku")
+Zła wartość, ale
+Juz w porzadku
+Definiowanie wyjątków
+Aby zdefiniować własny wyjatek należy (podobnie jak w Javie) oddziedziczyć go po klasie Exception. Aby zgłosić wyjątek używamy słowa kluczowego raise.
+
+In [0]:
+class MyException(Exception):
+    pass
+
+
+def call_exception():
+    raise MyException()
+  
+  
+try: 
+    call_exception()
+except MyException:
+    print("Przechwycono wyjątek")
+Przechwycono wyjątek
+try-except-else
+Jeśli w pythonie mamy możliwość zdefiniowania else do pętli to tym bardziej ma on sens przy bloku try. Jest to blok wykonujący się w przypadku gdy żaden wyjątek nie został zgłoszony (i tylko wtedy).
+
+In [0]:
+def dzielenie(x, y):
+    try:
+        print("Dzielenie "+str(x)+"/"+str(y))
+        result= x/y
+    except ZeroDivisionError:
+        print("Błąd dzielenia")
+    else:
+        print("Wynik to "+str(result))
+
+
+dzielenie(2, 3)
+dzielenie(1, 0)
+Dzielenie 2/3
+Wynik to 0.6666666666666666
+Dzielenie 1/0
+Błąd dzielenia
+Finally
+Python posiada podobnie do Javy posiada też klauzulę finally, czyli blok który musi się wykonać niezależnie do tego czy wyjątek został czy nie został zgłoszony.
+
+In [0]:
+def dzielenie(x, y):
+    try:
+        print("Dzielenie "+str(x)+"/"+str(y))
+        result= x/y
+    except ZeroDivisionError:
+        print("Błąd dzielenia")
+    else:
+        print("Wynik to "+str(result))
+    finally:
+        print("A ten blok wykona się zawsze")
+
+
+dzielenie(2, 3)
+dzielenie(1, 0)
+Dzielenie 2/3
+Wynik to 0.6666666666666666
+A ten blok wykona się zawsze
+Dzielenie 1/0
+Błąd dzielenia
+A ten blok wykona się zawsze
