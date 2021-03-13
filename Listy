@@ -1,0 +1,240 @@
+
+Bazowe operacje na listach tekstowych
+In [0]:
+bicycles = ['trekingowy', 'górski', 'miejski', 'szosowy']
+message = "Moim pierwszym rowerem był rower " + bicycles[0].title() + "."
+
+print(message)
+Moim pierwszym rowerem był rower Trekingowy.
+In [0]:
+auta = ['fiat', 'syrena', 'polonez', 'warszawa', 'mikrus', 'smyk']
+
+print("Oto lista początkowa:")
+print(auta)
+
+print("\nOto lista posortowana:")
+print(sorted(auta))
+
+print("\nOto lista posortowana:")
+print(sorted(auta))
+
+print("\nOto lista w odwrotnej kolejności alfabetycznej:")
+print(sorted(auta, reverse=True))
+
+print("\nOto ponownie lista początkowa:")
+print(auta)
+
+auta.sort();
+print("\nOto lista posortowana:")
+print(auta) # teraz nie można wrócić do listy pierwotnej
+Oto lista początkowa:
+['fiat', 'syrena', 'polonez', 'warszawa', 'mikrus', 'smyk']
+
+Oto lista posortowana:
+['fiat', 'mikrus', 'polonez', 'smyk', 'syrena', 'warszawa']
+
+Oto lista posortowana:
+['fiat', 'mikrus', 'polonez', 'smyk', 'syrena', 'warszawa']
+
+Oto lista w odwrotnej kolejności alfabetycznej:
+['warszawa', 'syrena', 'smyk', 'polonez', 'mikrus', 'fiat']
+
+Oto ponownie lista początkowa:
+['fiat', 'syrena', 'polonez', 'warszawa', 'mikrus', 'smyk']
+
+Oto lista posortowana:
+['fiat', 'mikrus', 'polonez', 'smyk', 'syrena', 'warszawa']
+In [0]:
+motocykle = ['romet', 'wsk', 'gad', 'lech', 'sm', 'perkun', 'mz'] 
+print(motocykle)
+
+niemiecki = 'mz'
+motocykle.remove(niemiecki)
+print(motocykle)
+print("\nMotocykl " + niemiecki.title() + " nie jest polskiej produkcji.")
+['romet', 'wsk', 'gad', 'lech', 'sm', 'perkun', 'mz']
+['romet', 'wsk', 'gad', 'lech', 'sm', 'perkun']
+
+Motocykl Mz nie jest polskiej produkcji.
+In [0]:
+auta = ['fiat', 'syrena', 'polonez', 'warszawa', 'mikrus', 'smyk']
+motocykle = ['romet', 'wsk', 'gad', 'lech', 'sm', 'perkun', 'mz'] 
+
+pojazdy = auta + motocykle
+print(pojazdy)
+['fiat', 'syrena', 'polonez', 'warszawa', 'mikrus', 'smyk', 'romet', 'wsk', 'gad', 'lech', 'sm', 'perkun', 'mz']
+In [0]:
+pojazdy.append('ikarus')
+pojazdy.append('autosan')
+
+print(pojazdy)
+['fiat', 'syrena', 'polonez', 'warszawa', 'mikrus', 'smyk', 'romet', 'wsk', 'gad', 'lech', 'sm', 'perkun', 'mz', 'ikarus', 'autosan']
+In [0]:
+my_foods = ['pizza', 'falafel', 'ciasto z marchwi'] 
+friend_foods = my_foods[:] 
+
+my_foods.append('cannolo') 
+friend_foods.append('lody') 
+
+print("Moje ulubione potrawy to:")
+print(my_foods)
+
+print("\nUlubione potrawy mojego przyjaciela to:")
+print(friend_foods)
+Moje ulubione potrawy to:
+['pizza', 'falafel', 'ciasto z marchwi', 'cannolo']
+
+Ulubione potrawy mojego przyjaciela to:
+['pizza', 'falafel', 'ciasto z marchwi', 'lody']
+In [0]:
+players = ['karol', 'martyna', 'michał', 'florian', 'ela'] 
+
+print("Oto trzech pierwszych graczy naszej drużyny:")
+for player in players[:3]:
+    print(player.title())
+Oto trzech pierwszych graczy naszej drużyny:
+Karol
+Martyna
+Michał
+In [0]:
+magicians = ['alicja', 'dawid', 'karolina'] 
+for magician in magicians: 
+    print(magician.title() + ", to była doskonała sztuczka!")  
+    print("Nie mogę się doczekać Twojej kolejnej sztuczki, " + magician.title() + ".\n") 
+    
+print("Dziękuję wszystkim. To był naprawdę wspaniały występ!")
+Alicja, to była doskonała sztuczka!
+Nie mogę się doczekać Twojej kolejnej sztuczki, Alicja.
+
+Dawid, to była doskonała sztuczka!
+Nie mogę się doczekać Twojej kolejnej sztuczki, Dawid.
+
+Karolina, to była doskonała sztuczka!
+Nie mogę się doczekać Twojej kolejnej sztuczki, Karolina.
+
+Dziękuję wszystkim. To był naprawdę wspaniały występ!
+In [15]:
+auta = ['fiat', 'syrena', 'polonez', 'warszawa', 'mikrus', 'smyk']
+motocykle = ['romet', 'wsk', 'gad', 'lech', 'sm', 'perkun', 'mz'] 
+
+pojazdy = auta + motocykle
+
+mojePojazdy = auta[4:5] + motocykle[2:]
+
+del pojazdy[3:4]
+
+print('Wszystkie pojazdy', sorted(pojazdy), 'w sumie jest ich', len(pojazd))
+print('Wszystkie pojazdy', mojePojazdy, 'w sumie jest ich', len(mojePojazdy))
+
+print("\nPojazd", "\t:\t", "długość napisu")
+for pojazd in sorted(mojePojazdy):
+    print(pojazd.title(), "\t:\t", len(pojazd), "")
+Wszystkie pojazdy ['fiat', 'gad', 'lech', 'mikrus', 'mz', 'perkun', 'polonez', 'romet', 'sm', 'smyk', 'syrena', 'wsk'] w sumie jest ich 2
+Wszystkie pojazdy ['mikrus', 'gad', 'lech', 'sm', 'perkun', 'mz'] w sumie jest ich 6
+
+Pojazd 	:	 długość napisu
+Gad 	:	 3 
+Lech 	:	 4 
+Mikrus 	:	 6 
+Mz 	:	 2 
+Perkun 	:	 6 
+Sm 	:	 2 
+Operacje na listach numerycznych
+In [0]:
+numbers = list(range(1,6)) 
+print(numbers)
+[1, 2, 3, 4, 5]
+In [0]:
+even_numbers = list(range(2,11,2)) 
+print(even_numbers)
+[2, 4, 6, 8, 10]
+In [0]:
+squares = []
+for value in range(1,11):
+    square = value**2
+    squares.append(square)
+    
+print(squares)
+[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+In [1]:
+cubes = []
+numbers = list(range(1,11))
+
+for value in numbers:
+    cube = value**3
+    cubes.append(cube)
+    
+print(cubes)
+
+cubes = [x**3 for x in numbers]
+print(cubes)
+
+cubes = list(map(lambda x: x**3, numbers))
+print(cubes)
+[1, 8, 27, 64, 125, 216, 343, 512, 729, 1000]
+[1, 8, 27, 64, 125, 216, 343, 512, 729, 1000]
+[1, 8, 27, 64, 125, 216, 343, 512, 729, 1000]
+In [0]:
+wymiary = [200, 50]
+print("Wymiary początkowe w cm:")
+for wymiar in wymiary:
+    print(wymiar)
+    
+wymiary = [400, 100]
+print("\nWymiary po modyfikacji w cm:")
+for wymiar in wymiary:
+    print(wymiar)
+
+print("\nWymiary w m:")
+for wymiar in wymiary:
+    print(wymiar / 100)
+
+wymiaryWMetrach = [x / 100 for x in wymiary]
+print("\nWymiary w m:")
+for wymiar in wymiaryWMetrach:
+    print(wymiar)
+
+wymiaryWMetrach = map(lambda x: x/100, wymiary)
+print("\nWymiary w m:")
+for wymiar in wymiaryWMetrach:
+    print(wymiar)
+Wymiary początkowe w cm:
+200
+50
+
+Wymiary po modyfikacji w cm:
+400
+100
+
+Wymiary w m:
+4.0
+1.0
+
+Wymiary w m:
+4.0
+1.0
+
+Wymiary w m:
+4.0
+1.0
+In [0]:
+import numpy
+
+metr = 100 # liczba cm w m
+wymiaryWCentyMetrach = numpy.array(wymiary)
+wymiaryWMetrach = wymiaryWCentyMetrach/metr
+
+print("\nWymiary w cm:")
+for wymiar in wymiaryWCentyMetrach:
+    print(wymiar)
+
+print("\nWymiary w m:")
+for wymiar in wymiaryWMetrach:
+    print(wymiar)
+Wymiary w cm:
+400
+100
+
+Wymiary w m:
+4.0
+1.0
