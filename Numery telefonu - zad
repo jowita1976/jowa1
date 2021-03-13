@@ -1,0 +1,59 @@
+import sys
+
+
+klasa NumberError(ValueError):
+    Przekazać
+
+
+def substitue(separator, liczba):
+    jeżeli len(numer) nie w [9, 11]:
+        powrót Brak
+    zastąpiony = liczba. zastąpić(separator, "", 2)
+    jeśli len(zastąpiony) == 9 i zastąpiony. isdigit():
+        powrót zastąpiony
+    powrót Brak
+
+
+def get_local_type(local_number, separatory=["", ", "-"]):
+    dla separatora w separatorach:
+        zastąpiony = separator, local_number)
+        jeśli zastąpione nie jest Brak:
+            powrót zastąpiony
+    powrót Brak
+
+
+def validate_number(phone_number):
+    jeśli phone_number[0:2] == "0-":
+        zastąpiony = get_local_type(phone_number[2:], [" "])
+        jeśli zastąpione jest Brak:
+            podnieść NumberError("Oczekiwano 0-XXX XXX XXX")
+        powrót zastąpiony
+    jeśli phone_number[0:5] == "0048 ":
+        zastąpiony = get_local_type(phone_number[5:], [" "])
+        jeśli zastąpione jest Brak:
+            podnieść NumberError("Oczekiwano 0048 XXX XXX XXX")
+        powrót "+48" + zastąpiony
+    jeśli phone_number[0:4] == "+48 ":
+        zastąpiony = get_local_type(phone_number[4:], ["-"])
+        jeśli zastąpione jest Brak:
+            podnieść NumberError("Oczekiwano +48 XXX-XXX-XXX")
+        powrót "+48" + zastąpiony
+    jeśli phone_number[0:3] == "+48":
+        zastąpiony = get_local_type(phone_number[3:], [""])
+        jeśli zastąpione jest Brak:
+            podnieść NumberError("Oczekiwano +48XXXXXXXXX")
+        powrót "+48" + zastąpiony
+    zastąpiony = get_local_type(phone_number)
+    jeśli zastąpione jest Brak:
+        podnieść NumberError("Oczekiwany XXXXXXXXX lub XXX XXX XXX lub XXX-XXX-XXX")
+    powrót zastąpiony  
+
+
+jeśli __name__ == "__main__":
+    spróbuj:
+        liczba = validate_number(sys. argv[1])
+    z wyjątkiem NumberError jako błędu:
+        sys. stderr. napisać("Nieprawidłowy format liczbowy: {}. \n". format(błąd))
+        sys. wyjście(1)
+    w innym miejscu:
+        druk(numer)
