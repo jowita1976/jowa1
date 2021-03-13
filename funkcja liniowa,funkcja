@@ -1,0 +1,52 @@
+# Ćwiczenie 1:
+# Rysowanie pojedynczej funkcji liniowej z zastosowaniem własnoręcznie zdefiniowanych
+
+importować wykresowo. graph_objs w podróży 
+import numpy jako np
+funkcje_liniowe importu 
+
+
+# parametry funkcji
+a = 0,5
+b = -1
+
+# Rysowanie wykresu
+wyk_lin = funkcje_liniowe. wygeneruj_wykres(a, b, [-2, 2])
+wyk_lin. nazwa = 'funkcja liniowa'
+
+fig = go. Rysunek()
+fig. add_trace(wyk_lin)
+
+# Konfiguracja wyglądu
+fig. update_layout(
+    szerokość=500,
+    wysokość=500,
+    yaxis=dict(
+        scaleanchor="x",
+        scaleratio=1,
+    ),
+    plot_bgcolor='rgba(255,255,255,255)'
+)
+
+fig. update_xaxes(
+    showgrid=Prawda,
+    gridwidth=1,
+    gridcolor='lightGray',
+    linia zerowa=Prawda,
+    zerolinewidth=1,
+    kolor zerowy='lightGray',
+    dtick=0,5,
+    zakres=[ -2, 2])
+
+fig. update_yaxes(
+    showgrid=Prawda,
+    gridwidth=1,
+    gridcolor='lightGray',
+    linia zerowa=Prawda,
+    zerolinewidth=1,
+    kolor zerowy='lightGray',
+    dtick=0,5,
+    zakres=[ -2, 2])
+
+
+fig. pokaż()
