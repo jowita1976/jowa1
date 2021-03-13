@@ -1,0 +1,232 @@
+class Graph(object):
+
+    def __init__(self, graph_dict=None):
+        """ 
+        Inicjalizacja obiektu klasy Graph
+        Jeśli nie podano słownika, będzie zainicjalizowany jako pusty
+        """
+        if graph_dict == None:
+            graph_dict = {}
+        self.__graph_dict = graph_dict
+
+    def vertices(self):
+        """ 
+        Zwraca listę wierzchołków grafu 
+        """
+        return list(self.__graph_dict.keys())
+
+    def edges(self):
+        """ 
+        Zwraca listę krawędzi grafu 
+        """
+        return self.__generate_edges()
+
+    def add_vertex(self, vertex):
+        """ 
+        Dodawanie nowego wierzchołka
+        """
+        if vertex not in self.__graph_dict:
+            self.__graph_dict[vertex] = []
+
+    def add_edge(self, edge):
+        """ 
+        Dodawanie nowej krawędzi
+        """
+        edge = set(edge)
+        (vertex1, vertex2) = tuple(edge)
+        if vertex1 in self.__graph_dict:
+            self.__graph_dict[vertex1].append(vertex2)
+        else:
+            self.__graph_dict[vertex1] = [vertex2]
+
+    def __generate_edges(self):
+        """ 
+        Funkcja pomocna przy wyświetlaniu wszystkich krawędzi
+        """
+        edges = []
+        for vertex in self.__graph_dict:
+            for neighbour in self.__graph_dict[vertex]:
+                if (neighbour, vertex) not in edges:
+                    edges.append((vertex, neighbour))
+        return edges
+
+    def __str__(self):
+        res = "wierzchołki: "
+        for k in self.__graph_dict:
+            res += str(k) + " "
+        res += "\nkrawędzie: "
+        for edge in self.__generate_edges():
+            res += str(edge) + " "
+        return res
+In [0]:
+g = { "a" : ["d"],
+      "b" : ["c"],
+      "c" : ["b", "c", "d", "e"],
+      "d" : ["a", "c"],
+      "e" : ["c"],
+      "f" : []
+    }
+
+graf = Graph(g)
+print(graf)
+wierzchołki: a b c d e f 
+krawędzie: ('a', 'd') ('b', 'c') ('c', 'c') ('c', 'd') ('c', 'e') 
+In [0]:
+class Graph(object):
+
+    def __init__(self, graph_dict=None):
+        """ 
+        Inicjalizacja obiektu klasy Graph
+        Jeśli nie podano słownika, będzie zainicjalizowany jako pusty
+        """
+        if graph_dict == None:
+            graph_dict = {}
+        self.__graph_dict = graph_dict
+
+    def vertices(self):
+        """ 
+        Zwraca listę wierzchołków grafu 
+        """
+        return list(self.__graph_dict.keys())
+
+    def edges(self):
+        """ 
+        Zwraca listę krawędzi grafu 
+        """
+        return self.__generate_edges()
+
+    def add_vertex(self, vertex):
+        """ 
+        Dodawanie nowego wierzchołka
+        """
+        if vertex not in self.__graph_dict:
+            self.__graph_dict[vertex] = []
+
+    # zmiana w metodzie add_edge:
+    # dodajemy nowy argument wywołania - weight
+    # modyfikujemy słownik grafu tak, aby waga krawędzi była w nim również zapisana
+    def add_edge(self, edge, weight):
+        """ 
+        Dodawanie nowej krawędzi
+        """
+        edge = set(edge)
+        (vertex1, vertex2) = tuple(edge)
+        if vertex1 in self.__graph_dict:
+            self.__graph_dict[vertex1].append((vertex2,weight))
+        else:
+            self.__graph_dict[vertex1] = [(vertex2,weight)]
+                                              
+    # zmiana w metodzie __generate_edges:
+    # należy uwzględnić wagi krawędzi  
+    def __generate_edges(self):
+        """ 
+        Funkcja pomocna przy wyświetlaniu wszystkich krawędzi
+        """
+        edges = []
+        for vertex in self.__graph_dict:
+            for neighbour, weight in self.__graph_dict[vertex]:
+                if (vertex, neighbour, weight) not in edges:
+                    edges.append((vertex, neighbour, weight))
+        return edges
+      
+    # dodajmy funkcję wypisującą nam sąsiadów danego węzła
+    def neighbours(self, vertex):
+        neighbours_lst = []
+        for (source, destination, weight) in self.__generate_edges():
+            if source == vertex:
+              neighbours_lst.append((destination,weight))
+        return neighbours_lst
+
+    def __str__(self):
+        res = "wierzchołki: "
+        for k in self.__graph_dict:
+            res += str(k) + " "
+        res += "\nkrawędzie: "
+        for edge in self.__generate_edges():
+            res += str(edge) + " "
+        return res
+In [0]:
+g2 = { "a" : [("d",2)],
+      "b" : [("c",3)],
+      "c" : [("b",2), ("c",5), ("d",1), ("e",3)],
+      "d" : [("a",3), ("c",1)],
+      "e" : [("c",5)],
+      "f" : []
+    }
+
+graf2 = Graph(g2)
+print(graf2)
+wierzchołki: a b c d e f 
+krawędzie: ('a', 'd', 2) ('b', 'c', 3) ('c', 'b', 2) ('c', 'c', 5) ('c', 'd', 1) ('c', 'e', 3) ('d', 'a', 3) ('d', 'c', 1) ('e', 'c', 5) 
+In [0]:
+graf2.neighbours('d')
+Out[0]:
+[('a', 3), ('c', 1)]
+In [0]:
+import math
+from collections import deque
+
+def dijkstra(graph, source, dest):
+
+        
+        # oznaczamy odległości od źródła do innych wierzchołków jako nieskończoność
+        distances = {vertex: math.inf for vertex in graph.vertices()}
+        
+        # zapisujemy poprzedników
+        previous_vertices = {
+            vertex: None for vertex in graph.vertices()
+        }
+        # dystans od źródła do źródła = 0
+        distances[source] = 0
+        
+        # zbór nieodwiedzonych wierzchołków
+        unvisited_vertices = graph.vertices()
+
+        while unvisited_vertices:
+            # przejdź do wierzchołka, do którego jest najkrótsza droga
+            # za pierwszym razem będzie to wierzchołek źródłowy
+            current_vertex = min(
+                unvisited_vertices, key=lambda vertex: distances[vertex])
+
+            # przerwij jeśli dystans do najbliższego węzła wynosi nieskończoność
+            # to znaczy, że nie ma połączenia do niego
+            if distances[current_vertex] == math.inf:
+               break
+
+          
+            # dla każdego z sąsiadów aktualnego wierzchołka oblicz odległość do
+            # niego poprzez aktualny wierzchołek
+            for neighbour, cost in graph.neighbours(current_vertex):
+                alternative_route = distances[current_vertex] + cost
+
+                # porównaj obliczoną odległość z wcześniej zapisaną 
+                # (na początku będą to nieskończoności)
+                # zachowaj mniejszą i zapisz aktualny wierzchołek jako poprzednik sąsiada
+                if alternative_route < distances[neighbour]:
+                    distances[neighbour] = alternative_route
+                    previous_vertices[neighbour] = current_vertex
+
+            # usuń aktualny wierzchołek z listy nieodwiedzonych
+            unvisited_vertices.remove(current_vertex)
+
+        path = []
+        # zacznij od węzła docelowego
+        current_vertex = dest
+        
+        # dopóki istnieją poprzednicy aktualnego węzła
+        # dodaj aktualny węzeł do ścieżki
+        # poprzednik staje się aktualnym węzłem
+        while previous_vertices[current_vertex] is not None:
+            path.append(current_vertex)
+            current_vertex = previous_vertices[current_vertex]
+            
+        # jeśli istnieje ścieżka to dodaj źródło
+        if path:
+            path.append(current_vertex)
+        # odwróć ścieżkę
+        path.reverse()
+        return path
+In [0]:
+dijkstra(graf2,'a','b')
+Out[0]:
+['a', 'd', 'c', 'b']
