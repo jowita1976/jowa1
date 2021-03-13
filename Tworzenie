@@ -1,0 +1,116 @@
+  
+z importu tkinter *
+od tkinter. importowanie czcionek *
+
+korzeń = Tk()
+
+tekst = StringVar()
+tekst. zestaw("etykieta_P1")
+
+root. tytuł("Moja aplikacja")
+root. geometria("400x400")
+
+root. konfiguracja kolumny(0, waga=1)
+root. konfiguracja wiersza(0, waga=1)
+root. konfiguracja rowu(1, waga=1)
+
+cz1 = Czcionka(rodzina="Segoe Print", rozmiar=28)
+
+fr1 = Ramka(korzeń)
+fr1. siatka(wiersz=0, kolumna=0, lepka=N+S+E+W)
+fr1. konfiguracja kolumny(0, waga=1)
+fr1. konfiguracja kolumny(1, waga=2)
+fr1. konfiguracja wiersza(0, waga=1)
+
+fr2 = Ramka(korzeń)
+fr2. siatka(wiersz=1, kolumna=0, lepka=N+S+E+W)
+# fr2.columnkonfigure(0, waga=1)
+# fr2.columnkonfigure(1, waga=2)
+# fr2.rowconfigure(0, waga=1)
+
+fr3 = Ramka(korzeń)
+fr3. siatka(wiersz=1, kolumna=0, lepka=N+S+E+W)
+nazwa = StringVar()
+nazwę. zestaw("__")
+pole_tekstowe_wartosc = StringVar()
+pole_tekstowe_wartosc. zestaw("")
+etykieta2 = Etykieta(fr3, textvariable=nazwa, czcionka=cz1)
+etykieta2. siatka(wiersz=0, kolumna=0)
+pole_tekstowe = Wpis(fr3, textvariable=pole_tekstowe_wartosc)
+pole_tekstowe. siatka(wiersz=1, kolumna=0)
+
+przycisk1 = Przycisk(fr1, tekst="P1", czcionka=cz1)
+przycisk1. siatka(wiersz=0, kolumna=0, lepka=N+S+E+W)
+
+przycisk2 = Przycisk(fr1, tekst="P2")
+przycisk2["font"] = cz1
+przycisk2. siatka(wiersz=0, kolumna=1, lepka=N+S+E+W)
+
+etykieta1 = Etykieta(fr2, textvariable=tekst, czcionka=cz1)
+etykieta1. siatka(wiersz=0, kolumna=0)
+
+cb1 = Przycisk kontrolny(fr2, tekst="opcja1", czcionka=cz1)
+cb2 = Przycisk kontrolny(fr2, tekst="opcja2", czcionka=cz1)
+cb3 = Przycisk kontrolny(fr2, tekst="opcja3", czcionka=cz1)
+cb1. siatka(wiersz=1, kolumna=0)
+cb2. siatka(wiersz=2, kolumna=0)
+cb3. siatka(wiersz=3, kolumna=0)
+
+
+def akcja1():
+    tekst. zestaw("Etykieta p1")
+
+
+def akcja2():
+    tekst. zestaw("Etykieta p2")
+
+
+def akcja(t):
+    tekst. zestaw(f"Etykieta  {t}")
+
+
+def witam(ptw):
+    nazwę. zestaw(f"Witam  {ptw. get()}")
+
+
+def p1():
+    fr3. grid_remove()
+    fr2. siatka()
+
+
+def p2():
+    fr2.grid_remove()
+    fr3.grid()
+
+
+przycisk1["command"] = lambda: p1()
+przycisk2["command"] = lambda: p2()
+
+# przycisk1["command"] = lambda x=przycisk1: akcja(x["text"])
+# przycisk2["command"] = lambda x=pole_tekstowe_wartosc: witam(x)
+
+
+def e1_p1(zdarzenie):
+    print(zdarzenie)
+    w = zdarzenie. widżet
+    w["font"] = Czcionka(rozmiar=12)
+
+
+def set_color_red(zdarzenie):
+    zdarzenia. widget["fg"] = "#ff0000"
+
+
+def set_color_black(zdarzenie):
+    zdarzenia. widget["fg"] = "#000000"
+
+
+# etykieta1.bind("<Button-1>", e1_p1)
+
+etykieta1. bind("<Enter>", set_color_red)
+etykieta1. bind("<Leave>", set_color_black)
+
+przycisk1. bind("<Enter>", set_color_red)
+przycisk1. bind("<Leave>", set_color_black)
+
+
+root. łępocie głównej()
