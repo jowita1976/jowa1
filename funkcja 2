@@ -1,0 +1,81 @@
+# Ćwiczenie 2:
+# Rysowanie dwa funkcji liniowych
+# Lokalizacja punktu przecięcia z zastosowaniem własnoręcznie zdefiniowanych
+
+importować wykresowo. graph_objs w podróży 
+import numpy jako np
+funkcje_liniowe importu 
+
+
+# Pierwsza funkcja liniowa
+a1 = 0,5
+b1 = -1
+
+# Druga funkcja liniowa
+a2 = -1,25
+b2 = 1
+
+# Punkt przecięcia
+pt_p = funkcje_liniowe. znajdz_punkt_przeciecia(a1, b1, a2, b2)
+
+zakres = -2, 2]
+
+# Wykres pierwszej funkcji
+wyk_lin1 = funkcje_liniowe. wygeneruj_wykres(a1, b1, zakres)
+wyk_lin1. nazwa = 'funkcja 1'
+wyk_lin1. marker = dict(kolor='rgba(255,0,0,1)')
+
+# wykres funkcji
+wyk_lin2 = funkcje_liniowe. wygeneruj_wykres(a2, b2 , zakres)
+wyk_lin2. nazwa = 'funkcja 2'
+wyk_lin2. marker = dict(kolor='rgba(0,0,255,1)')
+
+# Wykres punktu przecięcia
+sc_ptp = go. Punktowy(x=np. tablica(pt_p[0]), y=np. tablica(pt_p[1]), nazwa='przecięcie')
+sc_ptp. znacznik = dict(
+    kolor='rgba(0,255,0,0.5)',
+    rozmiar=15,
+    wiersz=dict(
+        kolor='rgba(0,0,0,1)',
+        szerokość=2
+    )
+)
+
+fig = go. Rysunek()
+fig. add_trace(wyk_lin1)
+fig. add_trace(wyk_lin2)
+fig. add_trace(sc_ptp)
+
+# Konfiguracja wyglądu
+fig. update_layout(
+    szerokość=500,
+    wysokość=500,
+    yaxis=dict(
+        scaleanchor="x",
+        scaleratio=1,
+    ),
+    plot_bgcolor='rgba(255,255,255,255)'
+)
+
+fig. update_xaxes(
+    showgrid=Prawda,
+    gridwidth=1,
+    gridcolor='lightGray',
+    linia zerowa=Prawda,
+    zerolinewidth=1,
+    kolor zerowy='lightGray',
+    dtick=0,5,
+    zakres=[ -2, 2])
+
+fig. update_yaxes(
+    showgrid=Prawda,
+    gridwidth=1,
+    gridcolor='lightGray',
+    linia zerowa=Prawda,
+    zerolinewidth=1,
+    kolor zerowy='lightGray',
+    dtick=0,5,
+    zakres=[ -2, 2])
+
+
+fig. pokaż()
