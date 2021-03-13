@@ -1,0 +1,60 @@
+  
+klasa TrieNode:
+
+    def __init__(ja):
+        siebie. dzieci = [Brak] * 26
+        siebie. isEndOfWord = Fałsz
+
+
+klasa Trie:
+    def __init__(ja):
+        siebie. root = jaźń. getNode ( getNode )()
+
+    def getNode(ja):
+        powrót TrieNode()
+
+    def _charToIndex(ja, ch):
+        zwrotu ord(ch) - ord('a')
+
+    def insert(własny, klucz):
+        pCrawl = jaźń. korzeń
+        długość = len(klucz)
+        dla poziomu w zakresie(długość):
+            indeks = jaźń. _charToIndex(klucz[poziom])
+
+            jeśli nie pCrawl. dzieci[indeks]:
+                pCrawl. dzieci[indeks] = ja . getNode ( getNode )()
+            pCrawl = pCrawl. dzieci[indeks]
+
+        pCrawl. isEndOfWord = Prawda
+
+    def search(self, key):
+        pCrawl = jaźń. korzeń
+        długość = len(klucz)
+        dla poziomu w zakresie(długość):
+            indeks = jaźń. _charToIndex(klucz[poziom])
+            jeśli nie pCrawl. dzieci[indeks]:
+                zwracanie fałszu
+            pCrawl = pCrawl. dzieci[indeks]
+
+        powrót pCrawl != Brak i pCrawl. isEndOfWord (Polski)
+
+def main():
+    klawisze = " "ala", "alabaster", "alabastrowe", "abrewacja", "absencja",
+            "bajka", "bajkopis", "bajkowy", "bajkopisarz"]
+    wyjście = ["nie ma w drzewie",
+              "jest w drzewie"]
+
+    t = Trie()
+
+    dla klawiszy w klawiszach:
+        t. insert(klawisz)
+
+    ({}---- {}". format("ala", wyjście[t. szukaj("ala")]))
+    ({}---- {}". format("alabaster", wyjście[t. szukaj("alabaster")]))
+    ({}---- {}". format("aleopatia", wyjście[t. szukaj("aleopatia")]))
+    ({}---- {}". format("bajka", wyjście[t. szukaj("bajka")]))
+
+
+jeśli __name__ == '__main__':
+    Główne()
