@@ -1,0 +1,129 @@
+
+Open In Colab
+Treść zadania
+Podaj algorytm wyliczający część wspólną dwóch zadanych prostokątów o bokach równoległych do osi układu współrzędnych.
+
+Analiza
+Czy specyfikacja podana w zadaniu jest wystarczająca do zapisania algorytmu?
+
+Nie, nie wiadomo co to znaczy zadane, nie wiadomo czy prostokąty są domknięte (z brzegiem), nie wiadomo, co zlecający wykonanie zadania rozumiał przez wyliczanie.
+
+Co może być częścią wspólną ?
+Jeśli prostokąty są z brzegiem, to prostokąt o bokach równoległych do osi układu, odcinek pionowy lub poziomy, punkt, zbiór pusty; wszystkie te przypadki możemy traktować jako szczególne rodzaje pierwszego przypadku.
+
+Jaka może być postać danych ?
+Można rozważać kilka różnych postaci:
+
+współrzędne dwu przeciwległych wierzchołków,
+współrzędne lewego górnego wierzchołka i prawego dolnego,
+współrzędne lewego górnego wierzchołka i długości boków,
+współrzędne środka, długość przekątnych i kąt nachylenia przekątnej łączącej lewy górny wierzchołek z prawym dolnym,
+współrzędne lewego górnego wierzchołka, pole prostokąta i stosunek długości boków,
+współrzędne wszystkich czterech wierzchołków (od lewego górnego w kolejności zgodnej z ruchem wskazówek zegara),
+obszar zaznaczony przez użytkownika myszką na ekranie.
+Każda z tych reprezentacji danych spełnia swoje zadanie i w konkretnym zastosowaniu może być tą, którą należy wybrać (bo np. nasz algorytm jest częścią większego systemu, który jej właśnie używa). Naszym zadaniem jako projektantów/analityków jest przeanalizowanie różnych możliwości, zaproponowanie zlecającemu rozwiązań, które uważamy za najlepsze, ale ostateczna decyzja należy do zlecającego, to my musimy się dostosować.
+
+Reprezentacja 7 i tak sprowadzi się do jednej z pozostałych.
+
+Reprezentacja 6 jest nadmiarowa. Taka sytuacja ma swoje wady (koszt pamięciowy) i zalety (można łatwiej się zorientować, że dane nie są poprawne i nie trzeba wyliczać danych, które są już podane, co może być kosztowne czasowo). Reprezentacje 3,4,5 są poprawne. W zależności od tego co chcemy robić z wynikiem naszych obliczeń, mogą się okazać warte wybrania.
+
+Reprezentacje 2 i 1 wydają się równoważne, dopiero przy wyborze reprezentacji wyniku okaże się, że różnica między nimi w tym akurat zadaniu jest bardzo istotna.
+
+Jaka może być postać wyniku?
+Skoro możemy traktować każdy możliwy wynik jako (być może zdegenerowany) prostokąt o bokach równoległych do osi układu, to byłoby dobrze użyć tu tej samej reprezentacji, co dla danych (nam jako piszącym będzie łatwiej, a przede wszystkim jest to lepsze dla użytkownika, który będzie mógł zastosować nasz algorytm do wyników przez ten algorytm policzonych). I tu ujawnia się wyższość reprezentacji 2, która pozwala reprezentować także pusty prostokąt, w przeciwieństwie do reprezentacji 1. (Reprezentacje 3-6 też są dobre, moglibyśmy także np. rysować wynik na ekranie.)
+
+Algorytm
+Gdy zaczniemy analizować możliwe wzajemne położenia prostokątów, okaże się, że przypadków jest co najmniej kilkanaście.alt text
+
+Zauważ, że wynikowy prostokąt jest iloczynem kartezjańskim dwóch odcinków. Tego, który jest częścią wspólną rzutów obu prostokątów na oś X i tego, który jest częścią wspólną rzutów obu prostokątów na oś Y. W ten sposób zadanie dwuwymiarowe zostaje zredukowane do dwóch zadań jednowymiarowych.
+
+Dane są dwa odcinki na prostej. Zastanów się, jaka może być wartość lewego końca części wspólnej tych odcinków.
+
+Załóżmy, że mamy operacje min i max. Przyjmijmy oznaczenia:
+
+A, B, W - prostokąty dane i wynikowy (odpowiednio)
+x1,x2,y1,y2 - współrzędne lewego-górnego, i prawego-dolnego wierzchołka (odpowiednio)
+P.x1 - notacja kropkowa do odwoływania się do współrzędnych
+Cały algorytm to cztery linijki:
+
+W.x1 = max(A.x1, B,x1)
+W.y1 = min(A.y1, B.y1)
+W.x2 = min(A.x2, B.x2)
+W.y2 = max(A.y2, B.y2)
+In [0]:
+# coding=utf-8
+# http://wazniak.mimuw.edu.pl/index.php?title=Wst%C4%99p_do_programowania/Wst%C4%99p_do_algorytm%C3%B3w/%C4%86wiczenia
+# znajdowanie części wspólnej dwóch protokątów o równoległych bokach
+# każdy prostokąt opisany jest przez krotkę x1, x2, y1, y2
+# x1 i x2 są rzutami rogów prostokąta na oś x i podobnie y1 i y2 na oś y
+# ponadto mamy x1 < x2 oraz y1 < y2
+
+# zapis poniżej jest skróconym zapisem algorytmu
+#  p1x1, p1x2, p1y1, p1y2 = prostokat1
+#  p2x1, p2x2, p2y1, p2y2 = prostokat2
+#  return max(p1x1,p2x1), min(p1x2,p2x1), max(p1y1,p2y1), min(p1y2,p2y2)
+# prostokąty przechowujemy w krotkach, aby funkcja mogła je zwracać
+# krotki są pythonowymi odpowiednikami pascalowych rekordów
+# zip zwraca listę [(p1x1, p2x1), (p1x2, p2x2), ...]
+
+def czesc_wspolna(prostokat1, prostokat2):
+    x1, x2, y1, y2 = zip(prostokat1, prostokat2)
+    return max(x1), min(x2), max(y1), min(y2)
+
+import turtle
+
+# prostokąt można też narysować przy użyciu pętli
+#  turtle.goto(x1, y1)
+#  turtle.down()
+#  for x in x2, x1:
+#      for y in y1, y2:
+#          turtle.goto(x, y)
+#      y1, y2 = y2, y1
+#  turtle.up()
+# ale to wcale nie skraca programu, bo trzeba raz odwracać kierunek
+
+def rysuj_prostokat(prostokat, kolor):
+    x1, x2, y1, y2 = prostokat
+    turtle.color(kolor)
+    turtle.goto(x1, y1)
+    turtle.begin_fill()
+    turtle.goto(x2, y1)
+    turtle.goto(x2, y2)
+    turtle.goto(x1, y2)
+    turtle.goto(x1, y1)
+    turtle.end_fill()
+
+# losowanie prostokątów do testowania algorytmu
+#  x1, x2 = random.randint(xmin, xmax), random.randint(xmin, xmax)
+#  y1, y2 = random.randint(ymin, ymax), random.randint(ymin, ymax)
+#  return min(x1,x2), max(x1,x2), min(y1,y2), max(y1,y2)
+# my wykorzystujemy fakt, że max i min działają też na krotkach
+
+import random
+
+def losowy_prostokat():
+    xmax = turtle.window_width() / 2
+    xmin = -xmax
+    ymax = turtle.window_height() / 2
+    ymin = -ymax
+    x = random.randint(xmin, xmax), random.randint(xmin, xmax)
+    y = random.randint(ymin, ymax), random.randint(ymin, ymax)
+    return min(x), max(x), min(y), max(y)
+
+
+# po zamknięciu okna pojawia się ponownie z nowymi prostokątami
+# bez turtle.update() nie rysował się zielony prostokąt
+
+import time
+
+turtle.tracer(False)
+turtle.up()
+while (True):
+    prostokat1 = losowy_prostokat()
+    prostokat2 = losowy_prostokat()
+    rysuj_prostokat(prostokat1, "yellow")
+    rysuj_prostokat(prostokat2, "blue")
+    rysuj_prostokat(czesc_wspolna(prostokat1, prostokat2), "green")
+    turtle.update()
+    time.sleep(5)
+    turtle.clear()
