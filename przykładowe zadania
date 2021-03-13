@@ -1,0 +1,188 @@
+
+Open In Colab
+Przykładowe zadania
+Zadanie 1
+
+In [0]:
+print('>')
+tekst = input()
+print('Podany przez Ciebie tekst to "', tekst, '"')
+>
+tekst
+Podany przez Ciebie tekst to " tekst "
+Zadanie 2
+
+In [0]:
+print('Podaj x')
+x = int(input())
+print('Podaj y')
+y = int(input())
+print('Suma podanych liczb to ', x+y)
+Podaj x
+10
+Podaj y
+20
+Suma podanych liczb to  30
+Zadanie 3
+
+In [0]:
+## poniższe będzie wczytywało tekst aż do wczytania pojedynczej litery q
+
+kolekcja = []
+print("Podawaj kolejne elementy do zapamiętania. Aby zakończyć wprowadź pojedynczą literę 'q'")
+while True:
+    print(">")
+    tekst = input()
+    if tekst == "q":
+        break;
+    kolekcja.append(tekst)
+print("Wprowadziłeś kolejno ")
+for element in kolekcja:
+    print(element)
+Podawaj kolejne elementy do zapamiętania. Aby zakończyć wprowadź pojedynczą literę 'q'
+>
+Kot
+>
+Pies
+>
+q
+Wprowadziłeś kolejno 
+Kot
+Pies
+Zadanie 4
+
+In [0]:
+print('Wprowadź liczbę, której podzielność przez 3 chcesz sprawdzić\n>')
+liczba = int(input())
+if liczba % 3 == 0:
+    print('Liczba jest podzielna przez 3')
+else :
+    print('Liczba nie jest podzielna przez 3')
+Wprowadź liczbę, której podzielność przez 3 chcesz sprawdzić
+>
+23
+Liczba nie jest podzielna przez 3
+Zadanie 5
+
+In [0]:
+print('Podaj jakieś liczbę (sprawdzę czy mam ją na sekretnej liście)')
+sekretna_lista = ( 3, 4, 17, 18, -2 , 9)
+liczba = int(input())
+if liczba in sekretna_lista:
+    print('Zgadłeś - ta liczba jest na liściee')
+else:
+    print('Pudło - nie ma tu takiej liczby')
+Podaj jakieś liczbę (sprawdzę czy mam ją na sekretnej liście)
+17
+Zgadłeś - ta liczba jest na liściee
+Zadanie 6
+
+In [0]:
+print('Podaj dodatnią liczbę pierwszych kwadratów liczb, które mam wypisać')
+liczba = int(input())
+if liczba > 0:
+    for i in range(1,1+liczba):
+        print(i*i, end=", ")
+else :
+    print('Podano niepoprawna liczbe')
+Podaj dodatnią liczbę pierwszych kwadratów liczb, które mam wypisać
+25
+1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256, 289, 324, 361, 400, 441, 484, 529, 576, 625, 
+Zadanie 7
+
+In [0]:
+def print_squares(count):
+    for i in range(1,1+count):
+        print(i*i, end=", ")
+
+print('Podaj dodatnią liczbę pierwszych kwadratów liczb, które mam wypisać')
+liczba = int(input())
+if liczba > 0:
+    print_squares(liczba)
+else :
+    print('Podaano niepoprawna liczbe')
+Podaj dodatnią liczbę pierwszych kwadratów liczb, które mam wypisać
+9
+1, 4, 9, 16, 25, 36, 49, 64, 81, 
+Zadanie 8
+
+In [0]:
+# Z tablicy wybiera się element rozdzielający, po czym tablica jest dzielona 
+# na dwa fragmenty: do początkowego przenoszone są wszystkie elementy nie 
+# większe od rozdzielającego, do końcowego wszystkie większe. Potem sortuje 
+# się osobno początkową i końcową część tablicy. Rekursja kończy się, gdy 
+# kolejny fragment uzyskany z podziału zawiera pojedynczy element, jako że
+# jednoelementowa tablica nie wymaga sortowania.
+def partition(arr,low,high): 
+    i = ( low-1 )         # indeks najmniejszego elementu
+    pivot = arr[high]     # element podziałowy
+  
+    for j in range(low , high): 
+  
+        # jeżeli element jest mniejszy bądź równy elementowi podziałowemu
+        if   arr[j] <= pivot: 
+          
+            # zwiększ indeks mniejszego elementu
+            i = i+1 
+            arr[i],arr[j] = arr[j],arr[i] 
+  
+    arr[i+1],arr[high] = arr[high],arr[i+1] 
+    return ( i+1 ) 
+  
+# Główna funkcja implementująca QuickSort
+# arr[] --> tablica do sortowania,
+# low   --> indeks początkowy, 
+# high  --> indeks końcowy
+def quickSort(arr,low,high): 
+    if low < high: 
+        # wyznaczenie pozycji elementu dzielącego
+        pi = partition(arr,low,high) 
+  
+        # oddzielne sortowanie elementów przed i za elementem dzielącym
+        quickSort(arr, low, pi-1) 
+        quickSort(arr, pi+1, high) 
+
+# test powyższego kodu
+arr = [10, 7, 8, 9, 1, 5] 
+n = len(arr) 
+quickSort(arr,0,n-1) 
+print ("Przestortowana tablica:") 
+for i in range(n): 
+    print ("%d" %arr[i]),
+Przestortowana tablica:
+1
+5
+7
+8
+9
+10
+Zadanie 9
+
+In [0]:
+def hanoi(n, A, B, C):
+    """Wieże Hanoi w Pythonie."""
+    if n == 1:
+        C.append(A.pop())
+        print(A, B, C)
+    else:
+        hanoi(n-1, A, C, B)   
+        C.append(A.pop())
+        print(A, B, C)
+        hanoi(n-1, B, A, C)
+
+number = 3   # rozwiązanie dla trzech krążków
+a = ["a"]
+b = ["b"]
+c = ["c"]
+for i in range(number):
+    a.append(number-i)
+print(a, b, c)
+hanoi(number, a, b, c)
+['a', 3, 2, 1] ['b'] ['c']
+['a', 3, 2] ['b'] ['c', 1]
+['a', 3] ['c', 1] ['b', 2]
+['c'] ['a', 3] ['b', 2, 1]
+['a'] ['b', 2, 1] ['c', 3]
+['b', 2] ['c', 3] ['a', 1]
+['b'] ['a', 1] ['c', 3, 2]
+['a'] ['b'] ['c', 3, 2, 1]
