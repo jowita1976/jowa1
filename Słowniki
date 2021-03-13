@@ -1,0 +1,175 @@
+
+Podstawowe operacje na słownikach
+Pojęcie słownika w programowaniu oznacza listę par elementów, z których pierwszy element jest kluczem/etykietą, natomiast drugi jest wartością związaną z tą etykietą.
+
+Budowanie słownika
+In [5]:
+zwierzeta = { "koń": "ssak", 
+              "pies": "ssak", 
+              "dudek": "ptak", 
+              "orzeł": "ptak", 
+              "karp": "ryba",
+              "łosoś": "ryba" }
+print(zwierzeta)
+
+print("Pierwszy klucz ze słownika:", list(zwierzeta.keys())[0])
+print("Pierwsza wartość ze słownika:", list(zwierzeta.values())[0])
+print("Pierwsza para ze słownika:", list(zwierzeta.items())[0])
+{'koń': 'ssak', 'pies': 'ssak', 'dudek': 'ptak', 'orzeł': 'ptak', 'karp': 'ryba', 'łosoś': 'ryba'}
+Pierwszy klucz ze słownika: koń
+Pierwsza wartość ze słownika: ssak
+Pierwsza para ze słownika: ('koń', 'ssak')
+Pobieranie wartości ze słowniaka
+In [0]:
+print(zwierzeta["karp"])
+print(zwierzeta.get("karp"))
+print(zwierzeta.get("ryba"))
+ryba
+ryba
+None
+Przeglądanie zawartości słownika
+In [0]:
+print("Metoda 1 - etykieta + wartość")
+
+for zwierze in zwierzeta:
+  print(zwierze, "to", zwierzeta[zwierze])
+
+print("\n")
+
+
+print("Metoda 2 - etykieta + wartość")
+
+for zwierze, gromada in zwierzeta.items():
+  print(zwierze, "to", gromada)
+
+print("\n")
+
+
+print("Metoda 3 - tylko wartość")
+
+for gromada in zwierzeta.values():
+  print(gromada)
+
+print("\n")
+Metoda 1 - etykieta + wartość
+koń to ssak
+pies to ssak
+dudek to ptak
+orzeł to ptak
+karp to ryba
+łosoś to ryba
+
+
+Metoda 2 - etykieta + wartość
+koń to ssak
+pies to ssak
+dudek to ptak
+orzeł to ptak
+karp to ryba
+łosoś to ryba
+
+
+Metoda 3 - tylko wartość
+ssak
+ssak
+ptak
+ptak
+ryba
+ryba
+
+
+Dodawanie pary etykieta/wartość
+In [0]:
+zwierzeta["okoń"] = "ryba"
+zwierzeta["słoń"] = "ssak"
+zwierzeta["żaba"] = "płaz"
+zwierzeta["mucha"] = "ryba"
+print(zwierzeta["mucha"])
+ryba
+Zmiana wartości dla danego klucza
+In [0]:
+zwierzeta["mucha"] = "owad"
+print(zwierzeta["mucha"])
+owad
+Usuwanie elementów ze słownika
+In [0]:
+for zwierze, gromada in zwierzeta.items():
+  print(zwierze, "to", gromada)
+print("\n")
+
+
+print("Usunięcie ostatio dodanego elementu")
+zwierzeta.popitem()
+
+for zwierze, gromada in zwierzeta.items():
+  print(zwierze, "to", gromada)
+print("\n")
+
+
+print("Usunięcie wybranego elementu")
+zwierzeta.pop("pies")
+del zwierzeta["karp"]
+
+for zwierze, gromada in zwierzeta.items():
+  print(zwierze, "to", gromada)
+print("\n")
+
+
+print("Usunięcie wszystkich elementów")
+zwierzeta.clear()
+
+for zwierze, gromada in zwierzeta.items():
+  print(zwierze, "to", gromada)
+print("\n")
+koń to ssak
+pies to ssak
+dudek to ptak
+orzeł to ptak
+karp to ryba
+łosoś to ryba
+okoń to ryba
+słoń to ssak
+żaba to płaz
+mucha to ryba
+
+
+Usunięcie ostatio dodanego elementu
+koń to ssak
+pies to ssak
+dudek to ptak
+orzeł to ptak
+karp to ryba
+łosoś to ryba
+okoń to ryba
+słoń to ssak
+żaba to płaz
+
+
+Usunięcie wybranego elementu
+koń to ssak
+dudek to ptak
+orzeł to ptak
+łosoś to ryba
+okoń to ryba
+słoń to ssak
+żaba to płaz
+
+
+Usunięcie wszystkich elementów
+
+
+Sprawdzanie czy klucz/etykieta istnieje w słowniku
+In [0]:
+zwierze = "koń"
+if zwierze in zwierzeta:
+  print(zwierze, "znajduje się w słowniku")
+else:
+  print(zwierze, "nie znajduje się w słowniku")
+
+zwierze = "paw"
+if zwierze in zwierzeta:
+  print(zwierze, "znajduje się w słowniku")
+else:
+  print(zwierze, "nie znajduje się w słowniku")
+koń znajduje się w słowniku
+paw nie znajduje się w słowniku
