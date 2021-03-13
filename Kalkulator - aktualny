@@ -1,0 +1,314 @@
+z importu tkinter *
+od tkinter. importowanie czcionek *
+
+root = Tk() # Główny obiekt, w są umieszczone są wszystkie pozostałe elementy interfejsu interfejsu
+root. tytuł("Kalkulator")
+
+if getattr(sys, 'frozen', False): # w przypadku uruchamiania po kompilacji
+    running_dir = sys. _MEIPASS + "./"
+w innym miejscu: 
+    running_dir = "./"
+icon_file_name = running_dir + "calc_icon.png"
+jeśli os. ścieżki. isfile(icon_file_name):
+    root. iconphoto(True, PhotoImage(plik=icon_file_name)) # Dodanie ikonki do aplikacji
+    
+root. geometria("300x400") # rozmiar aplikacji 300px szerokości, 400px wysokości
+
+Siatka. rowconfigure(korzeń, 0, waga=1) # skalowanie wierszy z wagą 1
+Siatka. columnconfigure(korzeń, 0, waga=1) # skalowanie kolumna z wagą 1
+
+# Dane aplikacji
+hist_val = StringVar() # zmienna odpowiadająca za zawartość ekranu z historią operacji
+hist_val. set("") # ustawienie wartości na pusty ciąg
+present_val = StringVar()   # zmienna odpowiadająca za zawartość ekranu akutalnie wprowadzanej wartości
+present_val. set("") # ustawienie wartości na pusty ciąg
+oper_var = StringVar()   # zmienna pamiętająca ostani naciśnięty przycisko z operacją
+oper_var. set("") # ustawienie wartości na pusty ciąg
+globalny num1
+num1 = 0
+globalny num2
+num2 = 0
+
+# główna ramka, została która podpięta pod obiekt root
+frame = Ramka(korzeń)
+# umieszczenie ramki w siatce(grid) o współrzędnych (0, 0)
+# opcja sticky przykleja do wskazanych krawędzi okna (zapewnia skalowanie do rozmiaru okna)
+ramki. siatka(wiersz=0, kolumna=0, lepka=N+S+W+E)
+
+# ustawienie wag do skalowania wierszy i kolumn na 5 dla siatki wewnątrz ramki(frame)
+dla k w zakresie(6):
+    Siatka. konfiguracja rowu(ramka, k, waga=5)
+dla k w zakresie(5):
+    Siatka. konfiguracja kolumny(ramka, k, waga=5)
+# zerowy rząd ma wagę (z projektu graficznego wynika, że ma być niższy od pozostałych)
+Siatka. konfiguracja rowu(ramka, 0, waga=2)
+
+# Czcionki
+font_num = Czcionka(rodzina="consolas", rozmiar=14)
+
+# Tworzenie elementów interfejsu. Wszystkie elementy interfejsu są dla nich wewnątrz ramki (ramka)
+# Etykiety (nieedytowalny tekst). Pełnią rolę ekranów.
+# Opcja textvariable pozwala na ustawianie tekstu zgodnie z wartością zmiennej
+#Konfiguracja elementów może odbywać się przy ich tworzeniu. Po przecinku należy wpisać parametr=wartość
+label_hist = Etykieta(ramka, textvariable=hist_val, bg="#282a36", fg="#f8f8f2", czcionka=font_num)
+label_present = Etykieta(ramka, textvariable=present_val, bg="#282a36", fg="#f8f8f2", czcionka=font_num)
+
+# Tworzenie obiektów odpowiedzialnych za przycyski numeryczne
+button_0 = Przycisk(ramka, tekst="0")
+button_1 = Przycisk(ramka, tekst="1")
+button_2 = Przycisk(ramka, tekst="2")
+button_3 = Przycisk(ramka, tekst="3")
+button_4 = Przycisk(ramka, tekst="4")
+button_5 = Przycisk(ramka, tekst="5")
+button_6 = Przycisk(ramka, tekst="6")
+button_7 = Przycisk(ramka, tekst="7")
+button_8 = Przycisk(ramka, tekst="8")
+button_9 = Przycisk(ramka, tekst="9")
+
+# Lista wszystkich przycisków numerycznych (ułatwia wspólną konfigurację)
+list_button_num = [
+    button_0,
+    button_1,
+    button_2,
+    button_3,
+    button_4,
+    button_5,
+    button_6,
+    button_7,
+    button_8,
+    button_9]
+
+# Zmiana parametrów przycisków. Wszystkie przyciski mają tę samą konfigurację.
+# Parametry zmienić i tak samo jak wartość kluczy dla słównika
+# ElementInterfejsu["nazwaParametru"] = wartość
+dla bt w list_button_num:
+    bt["bg"] = "#282a36"
+    bt["fg"] = "#f8f8f2"
+    bt["activebackground"] = "#282a36"
+    bt["activeforeground"] = "#f8f8f2"
+    bt["font"] = font_num
+
+# Tworzenie obiektów odpowiedzialnych za operacje matemtyczne
+button_pls = Przycisk(ramka, tekst="+")
+button_min = Przycisk(ramka, tekst="-")
+button_mul = Przycisk(ramka, tekst="*")
+button_div = Przycisk(ramka, tekst="/")
+button_p_m = Przycisk(ramka, tekst=u"\u00B1")
+
+# Lista wszystkich przycisków operacji ustny (ułatwia wspólną konfigurację)
+list_button_oper = [
+    button_pls,
+    button_min,
+    button_mul,
+    button_div,
+    button_p_m]
+
+# Zmiana parametrów przycisków. Wszystkie przyciski mają tę samą konfigurację.
+# Przyciski odpowiedzialne za operację albo inny kolor niż przycisk numeryczne
+dla bt w list_button_oper:
+    bt["bg"] = "#44475a"
+    bt["fg"] = "#f8f8f2"
+    bt["activebackground"] = "#44475a"
+    bt["activeforeground"] = "#f8f8f2"
+    bt["font"] = font_num
+
+# Pozostałe przyciski. Nie do kategorii, więc są konfigurowane przy tworzeniu.
+button_com = Przycisk(ramka, tekst="", bg="#44475a", fg="#f8f8f2", activebackground="#44475a", activeforeground="#f8f8f2", font=font_num)
+button_eql = Przycisk(ramka, tekst="=", bg="#009933", fg="#f8f8f2", activebackground="#009933", activeforeground="#f8f8f2", font=font_num)
+button_cls = Button(frame, text="CE", bg="#990000", fg="#f8f8f2", activebackground="#007722", activeforeground="#f8f8f2", font=font_num)
+
+
+# Rozmieszczanie elementów na siadkce ramki głównej. Współrzędne(0,0) liczone są od lewego górnego rogu.
+# Ekrany mają szerkość 5 kolumn (kolumnspan)
+label_hist. siatka(wiersz=0, kolumna=0, columnspan=5, lepki=N+S+W+E)
+label_present. siatka(wiersz=1, kolumna=0, columnspan=5, lepki=N+S+W+E)
+
+button_7. siatka(wiersz=2, kolumna=0, lepka=N+S+E+W)
+button_8. siatka(wiersz=2, kolumna=1, lepka=N+S+E+W)
+button_9. siatka(wiersz=2, kolumna=2, lepka=N+S+E+W)
+button_cls. siatka(wiersz=2, kolumna=3, columnspan=2, lepki=N+S+E+W) # przycisk CE długość ma 2 kolumn
+
+button_4. siatka(wiersz=3, kolumna=0, lepka=N+S+E+W)
+button_5. siatka(wiersz=3, kolumna=1, lepka=N+S+E+W)
+button_6. siatka(wiersz=3, kolumna=2, lepka=N+S+E+W)
+button_mul. siatka(wiersz=3, kolumna=3, lepka=N+S+E+W)
+button_div. siatka(wiersz=3, kolumna=4, lepka=N+S+E+W)
+
+button_1. siatka(wiersz=4, kolumna=0, lepka=N+S+E+W)
+button_2. siatka(wiersz=4, kolumna=1, lepka=N+S+E+W)
+button_3. siatka(wiersz=4, kolumna=2, lepka=N+S+E+W)
+button_pls. siatka(wiersz=4, kolumna=3, rowspan=2, lepki=N+S+E+W) # przycisk + wysokość ma 2 rzędów (rowspan)
+button_min. siatka(wiersz=4, kolumna=4, lepka=N+S+E+W)
+
+button_0. siatka(wiersz=5, kolumna=0, lepka=N+S+E+W)
+button_com. siatka(wiersz=5, kolumna=1, lepka=N+S+E+W)
+button_p_m. siatka(wiersz=5, kolumna=2, lepka=N+S+E+W)
+button_eql. siatka(wiersz=5, kolumna=4, lepka=N+S+E+W)
+
+
+# Logika aplikacji
+# Funkcja czyszcząca ekrana
+def clear_screen():
+    hist_val. zestaw("")
+    present_val. zestaw("")
+    oper_var. zestaw("")
+
+
+# Funkcja dodająca znak do ekranu
+def add_char(c):
+    jeśli oper_var. get() == "=":
+        clear_screen()
+    hist_val. (hist_val. dostać()+c)
+    present_val. (present_val. dostać()+c)
+
+
+# Funkcja dodająca przecinek do liczby.
+#Uwaga 1: Dla języka polskiego separatorem dziesiętym jest "",
+# Natomiast dla Pythona jest do "."
+#Uwaga 2: Przycisk ma się inaczej zachowuje inaczej w czy zawartość ekranu jest pusta.
+#Z 1 i 2, czy metody add_char w dodnie przecinka
+def add_coma():
+    jeśli present_val. get() == "":
+        add_char("0".)
+    w innym miejscu:
+        add_char(".")
+
+
+# Metoda wywołana po naciśnięciuu przycisku z operacją latka
+def perform_oper(c):
+    #Jeżeli ekran jest pusty do nic nie dzieje (naciśnięcu przycisku CE)
+    jeśli present_val. dostać() != "":
+        # Jeżeli ostatnia wykonana operacja do pusty ciąg do odczytaj liczbę z ekranu i zapamiętaj operację, operacją
+        jeśli oper_var. get() == "":
+            globalny num1
+            num1 = float(present_val. uzyskać())
+            hist_val. (hist_val. dostać() + c)
+            present_val. zestaw("")
+        # jeżęli ostatnia operacja do "=" ustaw wynik poprzedniej iteracji jako pierwszą liczbę liczbę
+        elif oper_var. get() == "=":
+            hist_val. zestaw(f"{num1}{c}")
+            present_val. zestaw("")
+        #W każdym innym wypadku (+, -, *, /). Odpowiada do wprowadzeniu kilku operatorów bez znaku "=" np. 1+2-3
+        # Kalkulator nie rozpoznje kolejności wykonywania działań więc po operacji drugiej operacji najpierw obliczyć wynik
+        w innym miejscu:
+            get_result()
+            present_val. zestaw("")
+        oper_var. zestaw(c)
+    hist_val. zestaw(f"{num1}{c}")
+    oper_var. zestaw(c)
+
+
+# Metoda wyliczająca wynik
+def cal_result():
+    globalny num1
+    globalny num2
+
+    jeśli oper_var. get() == "+":
+        res = num1+num2
+        present_val. zestaw(res)
+        num1 = res
+    elif oper_var. get() == "-":
+        res = num1-num2
+        present_val. zestaw(res)
+        num1 = res
+    elif oper_var. get() == "*":
+        res = num1*num2
+        present_val. zestaw(res)
+        num1 = res
+    elif oper_var. get() == "/":
+        res = num1/num2
+        present_val. zestaw(res)
+        num1 = res
+
+
+# Metoda odpowiedzialna za wyświetlenie wyniku (Odpowiada naciśnięcu "=")
+def get_result():
+    #Jeżeli ekran jest pusty lub tylko naciśnięty przycisk "=" nic się dzieje nie dzieje
+    jeśli present_val. get() != "" i oper_var. dostać() != "=":
+        globalny num2
+        num2 = float(present_val. uzyskać())
+        hist_val. (hist_val. uzyskać() + "=")
+        cal_result()
+        oper_var. zestaw("=")
+
+
+# Metoda odpowiedzialna za wykonanie operacji +/- (zmiana znaku)
+def change_sign():
+    # Dla pustego ekranu nic do nie dzieje
+    jeśli present_val. dostać() != "":
+        # Jeżeli ostatnia operacja do "=" lub pusty ciąg do zmiany znaku pierwszej liczby
+        #Odpwiada do sytuacji, w: w: kalkulator na wprowadzenie piewrszej liczby
+        jeśli oper_var. get() == "" lub oper_var. get() == "=":
+            tmp_num = float(present_val. uzyskać())
+            tmp_num = -tmp_num
+            hist_val. zestaw(f"{tmp_num}")
+            present_val. zestaw(tmp_num)
+        #W pozostałym wypadku do ...
+        # Odpwiada do sytuacji, w zdążej kalkulator na wprowadzenie drugiego liczby
+        w innym miejscu:
+            tmp_num = float(present_val. uzyskać())
+            tmp_num = -tmp_num
+            hist_val. zestaw(f"{num1}{oper_var. get()}{tmp_num}")
+            present_val. zestaw(tmp_num)
+
+
+# Przypisanie opracowana metod do odpowiednichch przycisków
+# Metody przypisuje się przez parametr "komenda", którego wartością powinna funkcji być lambda
+# Definicja funkcji lambfa wyglądao lambda wejsce: metoda(wejście)
+# Zapis labnda wejscie=cos: metoda(wejscie) oznacza, że do wejście przypisana zostania wartość zmiennej cos
+
+button_cls["command"] = lambda: clear_screen()
+
+dla bt w list_button_num:
+    bt["command"] = lambda x=bt: add_char(x["text"])
+
+dla bt w list_button_oper:
+    bt["command"] = lambda x=bt: perform_oper(x["text"])
+
+button_eql["command"] = lambda: get_result()
+button_com["command"] = lambda: add_coma()
+button_p_m["polecenie"] = lambda: change_sign()
+
+
+#Bonus - Zmiana koloru po najechaniu myszką na przycisk
+# Biblioteka tkinter udostępnia obługę zdarzeń(wydarzenia). Do zdarzenia
+# naciśnięcie określonego przycisku myszki, klawiatury, najechanie na dany elemnt itp...
+#Do zmiany koloru po najechaniu wykorzystane dwa byli zdarzenia:
+# - <Enter> wejście kurosrem w powieszchnie niz elemntu
+# - <Zostaw> wyjśćie kursora z powieszchni danego elemntu
+
+# Metoda zmieniająca kolor przycisku.
+# Biblioteka tkinter jako pierwszy parametr zawsze przekazuje informacje o zdarzeniu,
+# pozostałe mogą parametry być zefiniowane dowolnie
+def set_button_color(zdarzenie, bg_hex_color):
+    #bg_hex_color jest do kodowania przy pomocy kodu heksadecymalnego
+    # kod ten określa nasycenie poszczególnych barwch składowych czerwony, zielony, niebieski, z przedziału 0-255
+    # np. #{wartość czerwonego}{wartość zielnego}{wartość niebieskiego}
+    # wartość jest zapisywana w kodzie szestnastkowym czyli do zapisania 255 wartości wystarczyą tylko dwa znaki 255=ff
+    # np. #000000 - czarny, #ffffff - biały, #ff0000 - czerwony, #00ffff - zielony+niebieski=zółty
+    przycisk = zdarzenie. widget # jedna z informacji ou jest elementem dla którego wystąpiło zdarzenie
+    przycisk["bg"] = bg_hex_color # przycisk parametr posiada bg, zmieniamy wartość
+
+
+# Przypisanie zdarzeń do danego elementu odbywa się przy pomocy metody bind.
+# Metoda ta posiada dwa parametry wejściowe:
+# - 1 -> rodzaj zdarzenia
+# - 2 -> metoda, która ma ma wykonana kiedy dancie okoliczności wystąpi
+
+# przypisanie metod do przycisków numerycznych
+dla bt w list_button_num:
+    bt. bind("<Enter>", lambda x: set_button_color(x, "#6272a4"))
+    bt. bind("<Leave>", lambda x: set_button_color(x, "#282a36"))
+
+# przypisanie metod do przycisków operacyjnych
+dla bt w list_button_oper + [button_com]:
+    bt. bind("<Enter>", lambda x: set_button_color(x, "#758fe0"))
+    bt. bind("<Leave>", lambda x: set_button_color(x, "#44475a"))
+
+# przypisanie metod do pozostałych przycisków
+button_eql. bind("<Enter>", lambda x: set_button_color(x, "#39bf5b"))
+button_eql. bind("<Leave>", lambda x: set_button_color(x, "#007722"))
+button_cls. bind("<Enter>", lambda x: set_button_color(x, "#cc3939"))
+button_cls. bind("<Leave>", lambda x: set_button_color(x, "#990000"))
+
+root. mainloop() # uruchamia główną pętle interfejsu.
